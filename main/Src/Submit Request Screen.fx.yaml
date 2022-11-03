@@ -1323,7 +1323,7 @@
             Size: =15
             Text: ="PRIORITY LEVEL"
             Width: =200
-            X: =1024
+            X: =Parent.Width - Self.Width - 30
             Y: =18
             ZIndex: =4
 
@@ -1485,12 +1485,6 @@
             X: =250
             Y: =514
             ZIndex: =30
-
-    lblEditTicket_AssociatedDeptID As label:
-        Text: =locRecord.AssociatedDeptID
-        X: =737
-        Y: =110
-        ZIndex: =35
 
     Rectangle5_168 As rectangle:
         Fill: =gblTheme.SecondaryDark
