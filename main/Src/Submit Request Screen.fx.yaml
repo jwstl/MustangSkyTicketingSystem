@@ -1252,11 +1252,11 @@
                             RequestID = locRecord.ID
                         ),
                         // view note based on department
-                        (Value(lblEditTicket_UserDeptID.Text) = locRecord.AssociatedDeptID And ShowLevelID = 2) 
+                        (Value(lblEditTicket_UserDeptID.Text) = locRecord.AssociatedDeptID And ShowLevelID = gblConstant_ShowLevel_DepartmentOnly) 
                         //view note created by user
-                        Or ('Created By'.Email = User().Email And ShowLevelID = 3) 
+                        Or ('Created By'.Email = User().Email And ShowLevelID = gblConstant_ShowLevel_MeOnly) 
                         // view all notes
-                        Or ShowLevelID = 1
+                        Or ShowLevelID = gblConstant_ShowLevel_ViewableByAll
                     ),
                     Modified,
                     Descending
