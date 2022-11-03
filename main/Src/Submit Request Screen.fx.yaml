@@ -1289,7 +1289,7 @@
                         ThisItem.ShowLevelID,
                         gblConstant_ShowLevel_DepartmentOnly, Blue,
                         gblConstant_ShowLevel_MeOnly,Maroon,
-                        gblConstant_ShowLevel_ViewableByAll,ColorValue("#36B048"))
+                        gblConstant_ShowLevel_ViewableByAll,ColorFade(ColorValue("#36B048"),50%))
                 FontWeight: =FontWeight.Semibold
                 Height: =Parent.TemplateHeight
                 OnSelect: =Select(Parent)
