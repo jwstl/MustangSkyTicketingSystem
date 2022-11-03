@@ -1239,7 +1239,7 @@
         Y: =227
         ZIndex: =21
 
-        galNewScreenListing_1 As gallery.galleryVertical:
+        galEditTicket As gallery.galleryVertical:
             BorderColor: =gblTheme.PrimaryDark
             BorderThickness: =2
             Fill: =RGBA(230, 230, 230, 1)
@@ -1283,7 +1283,13 @@
             Label2_42 As label:
                 Align: =Align.Center
                 Color: =RGBA(255, 255, 255, 1)
-                Fill: =RGBA(149, 149, 149, 1)
+                Fill: |-
+                    =//RGBA(149, 149, 149, 1)
+                    Switch(
+                        ThisItem.ShowLevelID,
+                        gblConstant_ShowLevel_DepartmentOnly, Blue,
+                        gblConstant_ShowLevel_MeOnly,Maroon,
+                        gblConstant_ShowLevel_ViewableByAll,ColorValue("#36B048"))
                 FontWeight: =FontWeight.Semibold
                 Height: =Parent.TemplateHeight
                 OnSelect: =Select(Parent)
@@ -1293,12 +1299,22 @@
                 X: =lblColumnHeading2_2.X - Parent.X
                 ZIndex: =2
 
+            Icon4 As icon.Edit:
+                Height: =35
+                Icon: =Icon.Edit
+                OnSelect: |-
+                    =UpdateContext({locShowAddNotes: true});UpdateContext({locEditNote:true});
+                Width: =45
+                X: =905
+                Y: =7
+                ZIndex: =3
+
         Rectangle2_2 As rectangle:
             BorderColor: =Self.Fill
             BorderThickness: =2
             Fill: =gblTheme.PrimaryDark
             Height: =41
-            Width: =galNewScreenListing_1.Width
+            Width: =galEditTicket.Width
             X: =24
             Y: =18
             ZIndex: =2
@@ -1336,6 +1352,7 @@
             =Reset(txtRequestNoteBody);
             Reset(ddlRequestNoteShowLevel);
             UpdateContext({locShowAddNotes: true});
+            UpdateContext({locEditNote:false});
         Text: ="Add Note"
         X: =823
         Y: =706
@@ -1355,6 +1372,7 @@
 
     lblEditTicket_UserDeptID As label:
         Text: =LookUp(Users,Email = User().Email,DepartmentID)
+        Visible: =gblShowDebugging
         X: =558
         Y: =110
         ZIndex: =34
@@ -1398,7 +1416,7 @@
         txtRequestNoteBody As text:
             BorderColor: =gblTheme.PrimaryDark
             Color: =gblTheme.PrimaryDark
-            Default: =""
+            Default: =If(!locEditNote,"",galEditTicket.Selected.Notes)
             Height: =179
             HoverBorderColor: =gblTheme.PrimaryDark
             HoverColor: =gblTheme.PrimaryDark
@@ -1415,6 +1433,7 @@
             ChevronBackground: =gblTheme.PrimaryDark
             ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
             Color: =gblTheme.PrimaryDark
+            Default: =If(!locEditNote, "",LookUp(ShowLevels,ID = galEditTicket.Selected.ShowLevelID, Title))
             HoverFill: =gblTheme.PrimaryLight
             Items: =Sort(Filter(ShowLevels, IsActive),SortOrder,Ascending)
             OnChange: =

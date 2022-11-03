@@ -6681,19 +6681,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galNewScreenListing_1.AccessibleLabel"
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galNewScreenListing_1.AccessibleLabel",
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Submit Request Screen",
-                "type": "'Submit Request Screen'.cntNotes.galNewScreenListing_1"
+                "type": "'Submit Request Screen'.cntNotes.galEditTicket"
               }
             }
           ],
@@ -6711,19 +6711,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galNewScreenListing_1.TabIndex"
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.TabIndex"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galNewScreenListing_1.TabIndex",
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.TabIndex",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "TabIndex",
                 "module": "Submit Request Screen",
-                "type": "'Submit Request Screen'.cntNotes.galNewScreenListing_1"
+                "type": "'Submit Request Screen'.cntNotes.galEditTicket"
               }
             }
           ],
@@ -8295,6 +8295,66 @@
           },
           "ruleId": "acc-AccessibleLabelNeeded",
           "ruleIndex": 5
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.Icon4.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.Icon4.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntNotes.galEditTicket.Icon4"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 5
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.Icon4.TabIndex"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntNotes.galEditTicket.Icon4.TabIndex",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "TabIndex",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntNotes.galEditTicket.Icon4"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
+          "ruleIndex": 6
         },
         {
           "locations": [

@@ -122,7 +122,7 @@
         "Name": "icoBack",
         "Parent": "compScreenHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 790,
+        "PublishOrderIndex": 791,
         "Rules": [
           {
             "Category": "Data",
@@ -438,7 +438,7 @@
         "Name": "icoHeading",
         "Parent": "compScreenHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 791,
+        "PublishOrderIndex": 792,
         "Rules": [
           {
             "Category": "Data",
@@ -715,7 +715,7 @@
         "Name": "imgHeading",
         "Parent": "compScreenHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 792,
+        "PublishOrderIndex": 793,
         "Rules": [
           {
             "Category": "Data",
@@ -1013,7 +1013,7 @@
         "Name": "Label7",
         "Parent": "compScreenHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 793,
+        "PublishOrderIndex": 794,
         "Rules": [
           {
             "Category": "Data",
@@ -1341,7 +1341,7 @@
         "Name": "recSeparator",
         "Parent": "compScreenHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 794,
+        "PublishOrderIndex": 795,
         "Rules": [
           {
             "Category": "Data",
