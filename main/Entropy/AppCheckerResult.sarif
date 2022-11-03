@@ -8301,6 +8301,66 @@
             {
               "logicalLocations": [
                 {
+                  "fullyQualifiedName": "App.gblConstant_ShowLevel_DepartmentOnly"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.gblConstant_ShowLevel_DepartmentOnly",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "gblConstant_ShowLevel_DepartmentOnly",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 8
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.gblConstant_ShowLevel_ViewableByAll"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.gblConstant_ShowLevel_ViewableByAll",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "gblConstant_ShowLevel_ViewableByAll",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 8
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
                   "fullyQualifiedName": "App.gblSpinnerGraphic"
                 }
               ],
@@ -8312,6 +8372,36 @@
               },
               "properties": {
                 "member": "gblSpinnerGraphic",
+                "module": "App",
+                "type": "App"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-UnusedVariables",
+          "ruleIndex": 8
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "App.gblConstant_ShowLevel_MeOnly"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "App.gblConstant_ShowLevel_MeOnly",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "gblConstant_ShowLevel_MeOnly",
                 "module": "App",
                 "type": "App"
               }

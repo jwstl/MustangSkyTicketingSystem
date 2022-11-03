@@ -691,6 +691,11 @@ App As appinfo:
                 }
             )
         );
+        //Initialize All App Constants
+        Set(gblConstant_ShowLevel_ViewableByAll,1);
+        Set(gblConstant_ShowLevel_DepartmentOnly,2);
+        Set(gblConstant_ShowLevel_MeOnly,3);
+        //Finished Initializing All App Constants
         Set(
             gblShowSpinner,
             false
