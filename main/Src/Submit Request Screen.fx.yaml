@@ -1,0 +1,1474 @@
+"'Submit Request Screen' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    "'SCREEN HEADER_23' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_23'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+
+    "'APP HEADER_25' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_25'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =2
+
+    icoShowDebug_18 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =3
+
+    "'SPINNER GROUP_23' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+        recSpinner_23 As rectangle:
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =31
+
+        imgSpinner_24 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =321
+            ZIndex: =32
+
+    Label1_18 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =4
+
+    cntTicketInfo As groupContainer.manualLayoutContainer:
+        Height: =442
+        Visible: =galTabs_1.Selected.TabText = "Ticket Info"
+        Width: =1246
+        X: =100
+        Y: =227
+        ZIndex: =11
+
+        Rectangle5_155 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            ZIndex: =1
+
+        txtEditTicket_RequestSubject As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: |-
+                =  If(
+                    IsBlank(locRecord),
+                    "",
+                    locRecord.Subject
+                )
+            Height: =90
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+            MaxLength: =255
+            Mode: =TextMode.MultiLine
+            Size: =16
+            Width: =500
+            X: =20
+            Y: =52
+            ZIndex: =2
+
+        Label1_62 As label:
+            Color: =gblTheme.PrimaryDark
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            PaddingLeft: =0
+            Size: =16
+            Text: ="Request Subject Line"
+            Width: =500
+            X: =20
+            Y: =20
+            ZIndex: =3
+
+        Label1_63 As label:
+            Color: =gblTheme.PrimaryDark
+            FontWeight: =FontWeight.Semibold
+            Height: =25
+            PaddingLeft: =0
+            Size: =16
+            Text: ="Full Request Description"
+            Width: =500
+            X: =557
+            Y: =225
+            ZIndex: =4
+
+        txtEditTicket_RequestDescription As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: |-
+                =If(
+                    IsBlank(locRecord),
+                    "",
+                    locRecord.Body
+                )
+            Height: =121
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+            Mode: =TextMode.MultiLine
+            Size: =16
+            Width: =669
+            X: =557
+            Y: =256
+            ZIndex: =5
+
+        cmbEditTicket_SuggestedTechnician As combobox:
+            BorderColor: =gblTheme.PrimaryDark
+            ChevronBackground: =gblTheme.PrimaryDark
+            ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+            DefaultSelectedItems: |-
+                =If(
+                    !IsBlank(locRecord) And locRecord.SuggestedTechnicianID > 0,
+                    Office365Users.SearchUser(
+                        {
+                            searchTerm: locRecord.SuggestedTechnicianName,
+                            top: 1
+                        }
+                    )
+                )
+            DisplayFields: =["DisplayName","JobTitle"]
+            InputTextPlaceholder: ="Suggested Technician"
+            IsSearchable: =false
+            Items: |-
+                =If(
+                    !IsBlank(locRecord),
+                    Office365Users.SearchUser(
+                        {
+                            searchTerm: locRecord.SuggestedTechnicianName,
+                            top: 1
+                        }
+                    )
+                )
+            SearchFields: =["DisplayName"]
+            SearchItems: =[]
+            SelectionFill: =gblTheme.PrimaryDark
+            Template: =ListItemTemplate.Person
+            Width: =500
+            X: =20
+            Y: =185
+            ZIndex: =6
+
+        lblEditTicket_SuggestedTechnician As label:
+            Color: =gblTheme.PrimaryDark
+            FontWeight: =FontWeight.Semibold
+            Height: =25
+            PaddingLeft: =0
+            Size: =16
+            Text: ="Suggested Technician (Optional)"
+            Width: =500
+            X: =20
+            Y: =157
+            ZIndex: =7
+
+        cmbEditTicket_Requestor As combobox:
+            BorderColor: =gblTheme.PrimaryDark
+            ChevronBackground: =gblTheme.PrimaryDark
+            ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+            DefaultSelectedItems: |-
+                =If(
+                    IsBlank(locRecord),
+                    Office365Users.SearchUser(
+                        {
+                            searchTerm: User().FullName,
+                            top: 1
+                        }
+                    ),
+                    Office365Users.SearchUser(
+                        {
+                            searchTerm: locRecord.RequestorName,
+                            top: 1
+                        }
+                    )
+                )
+            DisplayFields: =["DisplayName","JobTitle"]
+            InputTextPlaceholder: ="Best person for the job"
+            Items: |-
+                =Office365Users.SearchUser(
+                    {
+                        searchTerm: Self.SearchText,
+                        Top: 20
+                    }
+                )
+            SearchFields: =["DisplayName"]
+            SearchItems: |-
+                =Search(Office365Users.SearchUser(
+                    {
+                        searchTerm: Self.SearchText,
+                        Top: 20
+                    }
+                ),cmbEditTicket_Requestor.SearchText,"DisplayName")
+            SelectionFill: =gblTheme.PrimaryDark
+            Template: =ListItemTemplate.Person
+            Width: =500
+            X: =20
+            Y: =261
+            ZIndex: =8
+
+        lblEditTicket_Requestor As label:
+            Color: =gblTheme.PrimaryDark
+            FontWeight: =FontWeight.Semibold
+            Height: =25
+            PaddingLeft: =0
+            Size: =16
+            Text: ="Requestor"
+            Width: =500
+            X: =20
+            Y: =233
+            ZIndex: =9
+
+        cmbEditTicket_PersonAffected As combobox:
+            BorderColor: =gblTheme.PrimaryDark
+            ChevronBackground: =gblTheme.PrimaryDark
+            ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+            DefaultSelectedItems: |
+                =If(
+                    IsBlank(locRecord),
+                    Office365Users.SearchUser(
+                        {
+                            searchTerm: User().FullName,
+                            top: 1
+                        }
+                    ),
+                    Office365Users.SearchUser(
+                        {
+                            searchTerm: locRecord.PersonAffectedName,
+                            top: 1
+                        }
+                    )
+                )
+            DisplayFields: =["DisplayName","JobTitle"]
+            InputTextPlaceholder: ="Best person for the job"
+            Items: |-
+                =Office365Users.SearchUser(
+                    {
+                        searchTerm: Self.SearchText,
+                        Top: 20
+                    }
+                )
+            SearchFields: =["DisplayName"]
+            SearchItems: |-
+                =Search(Office365Users.SearchUser(
+                    {
+                        searchTerm: Self.SearchText,
+                        Top: 20
+                    }
+                ),cmbEditTicket_PersonAffected.SearchText,"DisplayName")
+            SelectionFill: =gblTheme.PrimaryDark
+            Template: =ListItemTemplate.Person
+            Width: =500
+            X: =20
+            Y: =337
+            ZIndex: =10
+
+        lblEditTicket_PersonAffected As label:
+            Color: =gblTheme.PrimaryDark
+            FontWeight: =FontWeight.Semibold
+            Height: =25
+            PaddingLeft: =0
+            Size: =16
+            Text: ="Person Affected"
+            Width: =500
+            X: =20
+            Y: =309
+            ZIndex: =11
+
+        lblEditTicket_PriorityLevel As label:
+            Color: =gblTheme.PrimaryDark
+            FontWeight: =FontWeight.Semibold
+            PaddingLeft: =0
+            Size: =16
+            Text: ="Priority Level"
+            Width: =214
+            X: =901
+            Y: =16
+            ZIndex: =12
+
+        lblEditTicket_DepartmentResponsible As label:
+            Color: =gblTheme.PrimaryDark
+            FontWeight: =FontWeight.Semibold
+            Height: =33
+            PaddingLeft: =0
+            Size: =16
+            Text: ="Department Responsible"
+            Width: =275
+            X: =555
+            Y: =20
+            ZIndex: =14
+
+        galEditTicket_Departments As gallery.galleryVertical:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Default: |+
+                =  If(
+                    IsBlank(locRecord),
+                    LookUp(Departments, IsActive And Title = "Information Technology"),
+                    LookUp(Departments, ID = locRecord.AssociatedDeptID)
+                )
+                
+            Fill: =RGBA(230, 230, 230, 1)
+            Height: =161
+            Items: =Sort(Filter(Departments, IsActive),SortOrder)
+            Layout: =Layout.Vertical
+            OnSelect: =
+            TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+            TemplatePadding: =2
+            TemplateSize: =50
+            Width: =328
+            X: =557
+            Y: =51
+            ZIndex: =18
+
+            Label2_36 As label:
+                Height: =Parent.TemplateHeight
+                OnSelect: =Select(Parent)
+                PaddingLeft: =15
+                Text: =ThisItem.Title
+                Width: =Parent.TemplateWidth
+                ZIndex: =1
+
+        galEditTicket_PriorityLevel As gallery.galleryVertical:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Default: |-
+                =  If(
+                    IsBlank(locRecord),
+                    LookUp(RequestPriorities, IsActive And Title = "Medium"),
+                    LookUp(RequestPriorities, ID = locRecord.PriorityID)
+                )
+                
+                )
+            Fill: =RGBA(230, 230, 230, 1)
+            Height: =162
+            Items: =Sort(Filter(RequestPriorities, IsActive),SortOrder)
+            Layout: =Layout.Vertical
+            OnSelect: =
+            TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+            TemplatePadding: =2
+            TemplateSize: =50
+            Width: =328
+            X: =898
+            Y: =50
+            ZIndex: =19
+
+            Label2_37 As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                PaddingLeft: =15
+                Text: =ThisItem.Title
+                Width: =Parent.TemplateWidth
+                ZIndex: =1
+
+    btnEditTicket_CloseTicket As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        Text: ="Close Ticket"
+        X: =1003
+        Y: =706
+        ZIndex: =12
+
+    "'SPACER GROUP 99_17' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =12
+
+        Rectangle5_148 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =5
+
+        Rectangle5_150 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =6
+
+        Rectangle5_149 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =7
+
+        Rectangle5_147 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =8
+
+    btnbtnEditTicket_Save As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.SecondaryDark
+        HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+        HoverFill: =gblTheme.SecondaryLight
+        OnSelect: |
+            =Set(
+                gblShowSpinner,
+                true
+            );
+            // =============================================================================
+            // Does the Suggested Tech exist in our User Table?
+            // If so, put them into a variable
+            // If not, insert them as a new record and put them into that variable
+            // =============================================================================
+            If(
+                !IsBlank(cmbEditTicket_SuggestedTechnician.Selected),
+                UpdateContext(
+                    {
+                        locSuggestedTech: LookUp(
+                            Users,
+                            Email = cmbEditTicket_SuggestedTechnician.Selected.Mail
+                        )
+                    }
+                );
+                If(
+                    IsBlank(locSuggestedTech),
+                    Patch(
+                        Users,
+                        Defaults(Users),
+                        {
+                            Title: cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                            FirstName: First(
+                                Split(
+                                    cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                                    " "
+                                )
+                            ).Result,
+                            LastName: Last(
+                                Split(
+                                    cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                                    " "
+                                )
+                            ).Result,
+                            Email: cmbEditTicket_SuggestedTechnician.Selected.Mail
+                        }
+                    );
+                    UpdateContext(
+                        {
+                            locSuggestedTech: LookUp(
+                                Users,
+                                Email = cmbEditTicket_SuggestedTechnician.Selected.Mail
+                            )
+                        }
+                    );
+                );
+                //
+                // TODO: Refactor what tech is assigned
+                //
+            //UpdateContext({locSuggestedTech: First(Users)});
+            UpdateContext({locSuggestedTech: Blank()});    
+            );
+            // =============================================================================
+            // Does the requestor exist in our User Table?
+            // If so, put them into a variable
+            // If not, insert them as a new record and put them into that variable
+            // =============================================================================
+            UpdateContext(
+                {
+                    locRequestor: LookUp(
+                        Users,
+                        Email = cmbEditTicket_Requestor.Selected.Mail
+                    )
+                }
+            );
+            If(
+                IsBlank(locRequestor),
+                Patch(
+                    Users,
+                    Defaults(Users),
+                    {
+                        Title: cmbEditTicket_Requestor.Selected.DisplayName,
+                        FirstName: First(
+                            Split(
+                                cmbEditTicket_Requestor.Selected.DisplayName,
+                                " "
+                            )
+                        ).Result,
+                        LastName: Last(
+                            Split(
+                                cmbEditTicket_Requestor.Selected.DisplayName,
+                                " "
+                            )
+                        ).Result,
+                        Email: cmbEditTicket_Requestor.Selected.Mail
+                    }
+                );
+                UpdateContext(
+                    {
+                        locRequestor: LookUp(
+                            Users,
+                            Email = cmbEditTicket_Requestor.Selected.Mail
+                        )
+                    }
+                );
+                
+            );
+            // =============================================================================
+            // Does the Person Affected exist in our User Table?
+            // If so, put them into a variable
+            // If not, insert them as a new record and put them into that variable
+            // =============================================================================
+            UpdateContext(
+                {
+                    locPersonAffected: LookUp(
+                        Users,
+                        Email = cmbEditTicket_PersonAffected.Selected.Mail
+                    )
+                }
+            );
+            If(
+                IsBlank(locPersonAffected),
+                Patch(
+                    Users,
+                    Defaults(Users),
+                    {
+                        Title: cmbEditTicket_PersonAffected.Selected.DisplayName,
+                        FirstName: First(
+                            Split(
+                                cmbEditTicket_PersonAffected.Selected.DisplayName,
+                                " "
+                            )
+                        ).Result,
+                        LastName: Last(
+                            Split(
+                                cmbEditTicket_PersonAffected.Selected.DisplayName,
+                                " "
+                            )
+                        ).Result,
+                        Email: cmbEditTicket_PersonAffected.Selected.Mail
+                    }
+                );
+                UpdateContext(
+                    {
+                        locPersonAffected: LookUp(
+                            Users,
+                            Email = cmbEditTicket_PersonAffected.Selected.Mail
+                        )
+                    }
+                );
+                
+            );
+            If(
+                IsBlank(locRecord),
+            // =============================================================================
+            // New Ticket Record
+            // =============================================================================
+            // We are finally able to do our patch on the Request now that we have all of
+            // our data in-place in the Users Table
+            // =============================================================================
+                UpdateContext({locUniqueTitle: User().Email & " - " & Now()});
+                UpdateContext({locRequestDateTime: Now()});
+                UpdateContext(
+                    {
+                        locRecord: Patch(
+                            Requests,
+                            Defaults(Requests),
+                            {
+                                Title: locUniqueTitle,
+                                RequestDateTime: locRequestDateTime,
+                                Subject: txtEditTicket_RequestSubject.Text,
+                                Body: txtEditTicket_RequestDescription.Text,
+                                // Suggested Technician
+                                SuggestedTechnicianID: If(
+                                    !IsBlank(cmbEditTicket_SuggestedTechnician.Selected),
+                                    locSuggestedTech.ID
+                                ),
+                                SuggestedTechnicianName: If(
+                                    !IsBlank(cmbEditTicket_SuggestedTechnician.Selected),
+                                    locSuggestedTech.Title
+                                ),
+                                // Requestor
+                                RequestorID: locRequestor.ID,
+                                RequestorName: cmbEditTicket_Requestor.Selected.DisplayName,
+                                // Person Affected
+                                PersonAffectedID: locPersonAffected.ID,
+                                PersonAffectedName: cmbEditTicket_PersonAffected.Selected.DisplayName,
+                                // Department
+                                AssociatedDeptID: galEditTicket_Departments.Selected.ID,
+                                // Priority Level
+                                PriorityID: galEditTicket_PriorityLevel.Selected.ID
+                            }
+                        )
+                    }
+                );
+                // =============================================================================
+                // Send email notification about ticket creation
+                //
+                // TODO: Add distinct to prevent duplicate notifications
+                //
+                // =============================================================================
+            Office365Outlook.SendEmailV2(
+                    cmbEditTicket_Requestor.Selected.Mail & ";" & cmbEditTicket_PersonAffected.Selected.Mail,
+                    "Service Desk Ticket Received - " & txtEditTicket_RequestSubject.Text,
+                    "<strong>Ticket Created: </strong>" & locRequestDateTime & "<br />" & "<strong>Ticket Priority:</strong> " & galEditTicket_PriorityLevel.Selected.Title & "<br />" & "<strong>Ticket Subject:</strong> " & txtEditTicket_RequestSubject.Text & "<br />" & "<strong>Ticket Full Description: </strong>" & txtEditTicket_RequestDescription.Text & "<br />",
+                    {
+                        Importance: //"Normal, Low, High"
+            Switch(
+                            galEditTicket_PriorityLevel.Selected.Title,
+                            "High",
+                            "High",
+                            "Low",
+                            "Low",
+                            "Normal"
+                        )
+                    }
+                );
+                ,
+            // =============================================================================
+            // Update Existing Ticket
+            // =============================================================================    
+            //Notify("add update code here");
+                UpdateContext(
+                    {
+                        locRecord: Patch(
+                            Requests,
+                            LookUp(
+                                Requests,
+                                ID = locRecord.ID
+                            ),
+                            {
+                                Title: locUniqueTitle,
+                                //RequestDateTime: locRequestDateTime,
+                                Subject: txtEditTicket_RequestSubject.Text,
+                                Body: txtEditTicket_RequestDescription.Text,
+                                // Suggested Technician
+                                SuggestedTechnicianID: If(
+                                    !IsBlank(cmbEditTicket_SuggestedTechnician.Selected),
+                                    locSuggestedTech.ID,
+                                    0
+                                ),
+                                SuggestedTechnicianName: If(
+                                    !IsBlank(cmbEditTicket_SuggestedTechnician.Selected),
+                                    locSuggestedTech.Title,
+                                    ""
+                                ),
+                                // Requestor
+                                RequestorID: locRequestor.ID,
+                                RequestorName: cmbEditTicket_Requestor.Selected.DisplayName,
+                                // Person Affected
+                                PersonAffectedID: locPersonAffected.ID,
+                                PersonAffectedName: cmbEditTicket_PersonAffected.Selected.DisplayName,
+                                // Department
+                                AssociatedDeptID: galEditTicket_Departments.Selected.ID,
+                                // Priority Level
+                                PriorityID: galEditTicket_PriorityLevel.Selected.ID
+                            }
+                        )
+                    }
+                );
+                
+            );
+            //Notify("locRecord.ID: " & locRecord.ID);
+            /*
+            UpdateContext(
+                {
+                    locRecord: LookUp(Requests, Title = locUniqueTitle)
+                }
+            );*/
+            Set(
+                gblShowSpinner,
+                false
+            );
+        Text: ="Save"
+        X: =1185
+        Y: =706
+        ZIndex: =13
+
+    Button1 As button:
+        OnSelect: |
+            =Set(
+                varCurrentUser,
+                Patch(
+                    Users,
+                    Defaults(Users),
+                    {
+                        Title: cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                        FirstName: First(
+                            Split(
+                                cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                                " "
+                            )
+                        ).Result,
+                        //FirstName: cmbEditTicket_SuggestedTechnician.Selected.GivenName,
+                        LastName: Last(
+                            Split(
+                                cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                                " "
+                            )
+                        ).Result,
+                        Email: cmbEditTicket_SuggestedTechnician.Selected.Mail,
+                        Photo: Substitute(
+                            JSON(
+                                User().Image,
+                                JSONFormat.IncludeBinaryData
+                            ),
+                            """",
+                            ""
+                        ),
+                        PhotoLength: Len(
+                            Substitute(
+                                JSON(
+                                    User().Image,
+                                    JSONFormat.IncludeBinaryData
+                                ),
+                                """",
+                                ""
+                            )
+                        )
+                    }
+                )
+            );
+        Text: ="Insert User"
+        Visible: =gblShowDebugging
+        X: =461
+        Y: =684
+        ZIndex: =14
+
+    Button2 As button:
+        Fill: =RGBA(152, 208, 70, 1)
+        OnSelect: |
+            =If(
+                IsBlank(varCurrentUser),
+                Set(
+                    varCurrentUser,
+                    Patch(
+                        Users,
+                        Defaults(Users),
+                        {
+                            Title: cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                            FirstName: First(
+                                Split(
+                                    cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                                    " "
+                                )
+                            ).Result,
+                            LastName: Last(
+                                Split(
+                                    cmbEditTicket_SuggestedTechnician.Selected.DisplayName,
+                                    " "
+                                )
+                            ).Result,
+                            Email: cmbEditTicket_SuggestedTechnician.Selected.Mail,
+                            Photo: Substitute(
+                                JSON(
+                                    User().Image,
+                                    JSONFormat.IncludeBinaryData
+                                ),
+                                """",
+                                ""
+                            ),
+                            PhotoLength: Len(
+                                Substitute(
+                                    JSON(
+                                        User().Image,
+                                        JSONFormat.IncludeBinaryData
+                                    ),
+                                    """",
+                                    ""
+                                )
+                            )
+                        }
+                    );
+                );
+                
+            );
+        Text: ="Insert User Old"
+        Visible: =gblShowDebugging
+        X: =643
+        Y: =684
+        ZIndex: =15
+
+    Button1_1 As button:
+        Fill: =RGBA(255, 0, 0, 1)
+        OnSelect: |
+            =Set(
+                varCurrentUser,
+                Patch(
+                    Users,
+                    Defaults(Users),
+                    {
+                        Title: User().FullName,
+                        FirstName: First(
+                            Split(
+                                User().FullName,
+                                " "
+                            )
+                        ).Result,
+                        LastName: Last(
+                            Split(
+                                User().FullName,
+                                " "
+                            )
+                        ).Result,
+                        Email: User().Email,
+                        Photo: Substitute(
+                            JSON(
+                                User().Image,
+                                JSONFormat.IncludeBinaryData
+                            ),
+                            """",
+                            ""
+                        ),
+                        PhotoLength: Len(
+                            Substitute(
+                                JSON(
+                                    User().Image,
+                                    JSONFormat.IncludeBinaryData
+                                ),
+                                """",
+                                ""
+                            )
+                        )
+                    }
+                )
+            );
+        Text: ="Insert Current User"
+        Visible: =gblShowDebugging
+        Width: =223
+        X: =216
+        Y: =684
+        ZIndex: =16
+
+    TABS_2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =16
+
+        galTabs_1 As gallery.galleryHorizontal:
+            DisplayMode: |-
+                =If(
+                    IsBlank(locRecord),
+                    DisplayMode.Disabled,
+                    DisplayMode.Edit
+                )
+            Height: =190
+            Items: =colEditTicketTabs
+            TemplatePadding: =3
+            TemplateSize: =200
+            Width: =1216
+            X: =109
+            Y: =180
+            ZIndex: =9
+
+            Button5_23 As button:
+                BorderColor: =ColorFade(Self.Fill, -40%)
+                Fill: =If(ThisItem.IsSelected, gblTheme.SecondaryDark, gblTheme.PrimaryDark)
+                Height: =112
+                HoverFill: =gblTheme.PrimaryLight //ColorFade(gblTheme.SecondaryDark, 10%)
+                OnSelect: |-
+                    =Set(gblShowSpinner, true);
+                    
+                    Set(gblShowSpinner, false);
+                PaddingTop: =10
+                Text: =ThisItem.TabText
+                VerticalAlign: =VerticalAlign.Top
+                Width: =Parent.TemplateWidth
+                ZIndex: =2
+
+        shpEditTicket_TabsBackground As rectangle:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Fill: =gblTheme.PrimaryLight
+            Height: =434
+            Width: =1246
+            X: =100
+            Y: =227
+            ZIndex: =10
+
+    cntImages As groupContainer.manualLayoutContainer:
+        Height: =434
+        Visible: =galTabs_1.Selected.TabText = "Images"
+        Width: =1245
+        X: =100
+        Y: =227
+        ZIndex: =17
+
+        grpTicket_ScreenShot As group:
+            Height: =5
+            Width: =5
+            X: =40
+            Y: =40
+            ZIndex: =1
+
+            imgTicket_ScreenShot As image:
+                BorderColor: =gblTheme.PrimaryDark
+                BorderThickness: =2
+                Height: =ambTicket_ScreenShot.Height
+                Image: =If(IsBlank(ambTicket_ScreenShot.Media), SampleImage, ambTicket_ScreenShot.Media)
+                ImagePosition: =ImagePosition.Fill
+                Width: =ambTicket_ScreenShot.Width
+                X: =ambTicket_ScreenShot.X
+                Y: =ambTicket_ScreenShot.Y
+                ZIndex: =2
+
+            ambTicket_ScreenShot As addMedia:
+                BorderColor: =gblTheme.PrimaryDark
+                BorderThickness: =2
+                Height: =177
+                Size: =25
+                Width: =244
+                X: =21
+                Y: =21
+                ZIndex: =3
+
+        btnSubmitRequest_AddImage As button:
+            BorderColor: =ColorFade(Self.Fill, -40%)
+            Fill: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.SecondaryDark
+            OnSelect: |
+                =Set(
+                    gblShowSpinner,
+                    true
+                );
+                Patch(
+                    RequestImages,
+                    Defaults(RequestImages),
+                    {
+                        Title: txtTicket_ImageFileName.Text,
+                        RequestID: locRecord.ID,
+                        LongDescription: txtTicket_ImageDescription.Text,
+                        Image: Substitute(
+                            JSON(
+                                imgTicket_ScreenShot.Image,
+                                JSONFormat.IncludeBinaryData
+                            ),
+                            """",
+                            ""
+                        )
+                    }
+                );
+                Set(
+                    gblShowSpinner,
+                    false
+                );
+            Text: ="Add Image"
+            Width: =351
+            X: =20
+            Y: =379
+            ZIndex: =4
+
+        Gallery3 As gallery.galleryVertical:
+            BorderThickness: =2
+            Height: =434
+            Items: =RequestImages
+            Layout: =Layout.Vertical
+            TemplateSize: =225
+            Width: =850
+            WrapCount: =2
+            X: =381
+            ZIndex: =5
+
+            Image4 As image:
+                Fill: =RGBA(255, 255, 255, 1)
+                Height: =150
+                Image: =ThisItem.Image
+                OnSelect: =Select(Parent)
+                Width: =150
+                X: =10
+                Y: =10
+                ZIndex: =1
+
+            Icon1 As icon.Trash:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =30
+                Icon: =Icon.Trash
+                OnSelect: |
+                    =Set(
+                        gblShowSpinner,
+                        true
+                    );
+                    Select(Parent);
+                    Remove(
+                        RequestImages,
+                        ThisItem
+                    );
+                    Set(
+                        gblShowSpinner,
+                        false
+                    );
+                Width: =30
+                X: =387
+                Y: =180
+                ZIndex: =2
+
+            Label1_65 As label:
+                Color: =gblTheme.PrimaryDark
+                Height: =30
+                Text: ="File Name"
+                Width: =200
+                X: =173
+                Y: =15
+                ZIndex: =3
+
+            txtTicket_ImageFileName_1 As text:
+                BorderColor: =gblTheme.PrimaryDark
+                Color: =gblTheme.PrimaryDark
+                Default: =ambTicket_ScreenShot.FileName
+                HoverBorderColor: =gblTheme.PrimaryDark
+                HoverColor: =gblTheme.PrimaryDark
+                HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+                Size: =10
+                Width: =225
+                X: =173
+                Y: =45
+                ZIndex: =4
+
+            Label1_66 As label:
+                Color: =gblTheme.PrimaryDark
+                Height: =30
+                Text: ="Description of Image"
+                Width: =200
+                X: =173
+                Y: =90
+                ZIndex: =5
+
+            txtTicket_ImageDescription_1 As text:
+                BorderColor: =gblTheme.PrimaryDark
+                Color: =gblTheme.PrimaryDark
+                Default: =ThisItem.LongDescription
+                HintText: ="Description of Image"
+                HoverBorderColor: =gblTheme.PrimaryDark
+                HoverColor: =gblTheme.PrimaryDark
+                HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+                Mode: =TextMode.MultiLine
+                Size: =10
+                Width: =225
+                X: =173
+                Y: =120
+                ZIndex: =6
+
+            Icon3 As icon.Save:
+                Color: =RGBA(127, 178, 57, 1)
+                Height: =30
+                Icon: =Icon.Save
+                OnSelect: |
+                    =Set(
+                        gblShowSpinner,
+                        true
+                    );
+                    Patch(
+                        RequestImages,
+                        ThisItem,
+                        {
+                            Title: txtTicket_ImageFileName_1.Text,
+                            LongDescription: txtTicket_ImageDescription_1.Text
+                        }
+                    );
+                    Set(
+                        gblShowSpinner,
+                        false
+                    );
+                Width: =30
+                X: =343
+                Y: =180
+                ZIndex: =7
+
+        Rectangle5_161 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1
+            Y: =1
+            ZIndex: =6
+
+        Rectangle5_162 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1225
+            ZIndex: =7
+
+        Label1_59 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: ="File Name"
+            Width: =350
+            X: =21
+            Y: =215
+            ZIndex: =8
+
+        txtTicket_ImageFileName As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: =ambTicket_ScreenShot.FileName
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+            Width: =350
+            X: =21
+            Y: =245
+            ZIndex: =9
+
+        Rectangle5_163 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =20
+            Y: =198
+            ZIndex: =10
+
+        Label1_64 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: ="Description of Image"
+            Width: =350
+            X: =21
+            Y: =290
+            ZIndex: =11
+
+        txtTicket_ImageDescription As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: =
+            HintText: ="Description of Image"
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+            Mode: =TextMode.MultiLine
+            Width: =350
+            X: =21
+            Y: =320
+            ZIndex: =12
+
+    Label4 As label:
+        Text: =locRecord.ID
+        X: =80
+        Y: =728
+        ZIndex: =18
+
+    Label3 As label:
+        BorderThickness: =2
+        Text: =locRecord.Subject
+        X: =154
+        Y: =728
+        ZIndex: =19
+
+    Label5 As label:
+        BorderThickness: =2
+        Text: =locRecord.Body
+        Width: =378
+        X: =330
+        Y: =728
+        ZIndex: =20
+
+    cntNotes As groupContainer.manualLayoutContainer:
+        Height: =457
+        Visible: = galTabs_1.Selected.TabText = "Notes"
+        Width: =1246
+        X: =100
+        Y: =227
+        ZIndex: =21
+
+        galNewScreenListing_1 As gallery.galleryVertical:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Fill: =RGBA(230, 230, 230, 1)
+            Height: =363
+            Items: |-
+                =Sort(
+                    Filter(
+                        RequestNotes,
+                        RequestID = locRecord.ID
+                    ),
+                    Modified,
+                    Descending
+                )
+            Layout: =Layout.Vertical
+            OnSelect: =
+            TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+            TemplatePadding: =2
+            TemplateSize: =50
+            Width: =698
+            X: =24
+            Y: =55
+            ZIndex: =1
+
+            Label2_40 As label:
+                Height: =Parent.TemplateHeight
+                OnSelect: =Select(Parent)
+                PaddingLeft: =15
+                Text: =ThisItem.Notes
+                Width: =lblColumnHeading1_2.Width
+                X: =lblColumnHeading1_2.X - Parent.X
+                ZIndex: =1
+
+            Label2_42 As label:
+                Align: =Align.Center
+                Color: =RGBA(255, 255, 255, 1)
+                Fill: =RGBA(149, 149, 149, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =Parent.TemplateHeight
+                OnSelect: =Select(Parent)
+                PaddingLeft: =15
+                Text: =Substitute(LookUp(ShowLevels, ID = ThisItem.ShowLevelID,Title), "Viewable By ", "")
+                Width: =lblColumnHeading2_2.Width
+                X: =lblColumnHeading2_2.X - Parent.X
+                ZIndex: =2
+
+        Rectangle2_2 As rectangle:
+            BorderColor: =Self.Fill
+            BorderThickness: =2
+            Fill: =gblTheme.PrimaryDark
+            Height: =41
+            Width: =galNewScreenListing_1.Width
+            X: =24
+            Y: =18
+            ZIndex: =2
+
+        lblColumnHeading1_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =41
+            PaddingLeft: =15
+            Size: =15
+            Text: ="NOTE"
+            Width: =350
+            X: =24
+            Y: =Rectangle2_2.Y
+            ZIndex: =3
+
+        lblColumnHeading2_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =41
+            PaddingLeft: =15
+            Size: =15
+            Text: ="PRIORITY LEVEL"
+            Width: =200
+            X: =514
+            Y: =Rectangle2_2.Y
+            ZIndex: =4
+
+    btnAddNote As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.SecondaryDark
+        HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+        HoverFill: =gblTheme.SecondaryLight
+        OnSelect: |-
+            =Reset(txtRequestNoteBody);
+            Reset(ddlRequestNoteShowLevel);
+            UpdateContext({locShowAddNotes: true});
+        Text: ="Add Note"
+        X: =823
+        Y: =706
+        ZIndex: =22
+
+    "'SIDE NAV_23' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_23'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_23'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =33
+
+    grpNotes As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =34
+
+        Rectangle6 As rectangle:
+            BorderColor: =Self.Fill
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =locShowAddNotes
+            Width: =1366
+            ZIndex: =23
+
+        Rectangle6_1 As rectangle:
+            BorderColor: =ColorFade(Self.Fill, -25%)
+            Fill: =gblTheme.PrimaryLight
+            Height: =434
+            Visible: =locShowAddNotes
+            Width: =1245
+            X: =100
+            Y: =227
+            ZIndex: =24
+
+        lblRequestNotes As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: |-
+                ="Request Notes:"
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =279
+            ZIndex: =25
+
+        txtRequestNoteBody As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: =""
+            Height: =179
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+            Mode: =TextMode.MultiLine
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =318
+            ZIndex: =26
+
+        ddlRequestNoteShowLevel As dropdown:
+            BorderColor: =gblTheme.PrimaryDark
+            ChevronBackground: =gblTheme.PrimaryDark
+            ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+            Color: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.PrimaryLight
+            Items: =Sort(Filter(ShowLevels, IsActive),SortOrder,Ascending)
+            OnChange: =
+            PressedColor: =gblTheme.SecondaryLightFont
+            PressedFill: =gblTheme.SecondaryLight
+            SelectionFill: =gblTheme.PrimaryDark
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =543
+            ZIndex: =27
+
+        btnCancelNote As button:
+            BorderColor: =ColorFade(Self.Fill, -40%)
+            Fill: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.SecondaryDark
+            OnSelect: |-
+                =Set(gblShowSpinner, true);
+                UpdateContext({locShowAddNotes: false});
+                Set(gblShowSpinner, false);
+            Text: ="Cancel"
+            Visible: =locShowAddNotes
+            X: =961
+            Y: =592
+            ZIndex: =28
+
+        btnSaveNote As button:
+            BorderColor: =ColorFade(Self.Fill, -40%)
+            Fill: =gblTheme.SecondaryDark
+            HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+            HoverFill: =gblTheme.SecondaryLight
+            OnSelect: |
+                =Set(
+                    gblShowSpinner,
+                    true
+                );
+                Patch(
+                    RequestNotes,
+                    Defaults(RequestNotes),
+                    {
+                        Title: User().Email & " - " & Now(),
+                        ShowLevelID: ddlRequestNoteShowLevel.Selected.ID,
+                        RequestID: locRecord.ID,
+                        Notes: txtRequestNoteBody.Text,
+                        StatusChange: false,
+                        UserID: varCurrentUserData.ID,
+                        UsersName: varCurrentUserData.Title
+                    }
+                );
+                UpdateContext({locShowAddNotes: false});
+                Set(
+                    gblShowSpinner,
+                    false
+                );
+            Text: ="Save Note"
+            Visible: =locShowAddNotes
+            X: =1147
+            Y: =592
+            ZIndex: =29
+
+        lblRequestNotes_1 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: |-
+                ="Privacy:"
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =514
+            ZIndex: =30
+

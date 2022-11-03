@@ -1,0 +1,595 @@
+"'Copy Controls From Here' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        Patch(
+            ScreenUse,
+            Defaults(ScreenUse),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email), 
+                Info: "Screen.OnVisible",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    "'SCREEN HEADER_8' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_8'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+
+    "'APP HEADER_8' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_8'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =2
+
+    icoShowDebug_3 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =3
+
+    Label1 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        Text: ="Text"
+        X: =100
+        Y: =180
+        ZIndex: =4
+
+    TextInput1 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: ="Text input"
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+        Width: =328
+        X: =100
+        Y: =303
+        ZIndex: =5
+
+    HtmlText1 As htmlViewer:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Height: =55
+        Size: =12
+        Width: =296
+        X: =100
+        Y: =356
+        ZIndex: =6
+
+    ComboBox1 As combobox:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Items: =ComboBoxSample
+        SearchItems: =Search(ComboBoxSample,ComboBox1.SearchText,"Value1")
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =100
+        Y: =482
+        ZIndex: =7
+
+    DatePicker1 As datepicker:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        IconBackground: =gblTheme.PrimaryDark
+        PaddingTop: =3
+        X: =100
+        Y: =551
+        ZIndex: =8
+
+    ListBox1 As listbox:
+        BorderColor: =gblTheme.PrimaryDark
+        Items: =ListboxSample
+        PressedFill: =gblTheme.SecondaryDark
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =100
+        Y: =615
+        ZIndex: =9
+
+    Checkbox1 As checkbox:
+        BorderColor: =Transparent 
+        CheckboxBorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Text: ="Option"
+        X: =430
+        Y: =175
+        ZIndex: =10
+
+    Radio1 As radio:
+        BorderColor: =gblTheme.PrimaryDark
+        Items: =RadioSample
+        RadioBorderColor: =gblTheme.PrimaryDark
+        X: =450
+        Y: =250
+        ZIndex: =11
+
+    Toggle1 As toggleSwitch:
+        BorderColor: =RGBA(0, 18, 107, 0)
+        TrueFill: =gblTheme.PrimaryDark
+        X: =484
+        Y: =383
+        ZIndex: =12
+
+    Slider1 As slider:
+        BorderColor: =RGBA(0, 18, 107, 0)
+        Height: =44
+        ValueFill: =gblTheme.PrimaryDark
+        Width: =161
+        X: =829
+        Y: =478
+        ZIndex: =13
+
+    Rating1 As rating:
+        BorderColor: =RGBA(0, 18, 107, 0)
+        ContentLanguage: =""
+        Default: =3
+        DisabledFill: =Self.Fill
+        DisplayMode: =DisplayMode.Edit
+        FocusedBorderColor: =Self.BorderColor
+        Height: =40
+        HoverFill: =Self.Fill
+        PressedFill: =Self.Fill
+        RatingFill: =gblTheme.PrimaryDark
+        Width: =200
+        X: =122
+        Y: =228
+        ZIndex: =14
+
+    Timer2 As timer:
+        Fill: =gblTheme.PrimaryDark
+        X: =250
+        Y: =169
+        ZIndex: =15
+
+    RichTextEditor1 As richTextEditor:
+        BorderColor: =gblTheme.PrimaryDark
+        Default: ="Enter some <strong>rich text</strong> here."
+        Height: =179
+        X: =475
+        Y: =571
+        ZIndex: =16
+
+    Rectangle1_20 As rectangle:
+        Fill: =gblTheme.PrimaryDark
+        Height: =50
+        Width: =250
+        X: =633
+        Y: =178
+        ZIndex: =17
+
+    Rectangle1_21 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =50
+        Width: =250
+        X: =633
+        Y: =226
+        ZIndex: =18
+
+    Label3_20 As label:
+        Color: =gblTheme.PrimaryDarkFont
+        Height: =50
+        PaddingLeft: =15
+        Text: ="PrimaryDark"
+        Width: =200
+        X: =633
+        Y: =178
+        ZIndex: =19
+
+    Label3_21 As label:
+        Color: =gblTheme.SecondaryDarkFont
+        Height: =50
+        PaddingLeft: =15
+        Text: ="SecondaryDark"
+        Width: =200
+        X: =633
+        Y: =226
+        ZIndex: =20
+
+    Rectangle1_22 As rectangle:
+        Fill: =gblTheme.PrimaryLight
+        Height: =50
+        Width: =250
+        X: =633
+        Y: =326
+        ZIndex: =21
+
+    Rectangle1_23 As rectangle:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dashed
+        BorderThickness: =2
+        Fill: =gblTheme.BodyBackground
+        Height: =50
+        Width: =250
+        X: =633
+        Y: =276
+        ZIndex: =22
+
+    Label3_22 As label:
+        Color: =gblTheme.BodyBackgroundFont
+        Height: =50
+        PaddingLeft: =15
+        Text: ="BodyBackground"
+        Width: =200
+        X: =633
+        Y: =276
+        ZIndex: =23
+
+    Label3_23 As label:
+        Color: =gblTheme.PrimaryLightFont
+        Height: =50
+        PaddingLeft: =15
+        Text: ="PrimaryLight"
+        Width: =200
+        X: =633
+        Y: =326
+        ZIndex: =24
+
+    Rectangle1_24 As rectangle:
+        Fill: =gblTheme.SecondaryLight
+        Height: =50
+        Width: =250
+        X: =633
+        Y: =376
+        ZIndex: =25
+
+    Label3_24 As label:
+        Color: =gblTheme.SecondaryLightFont
+        Height: =50
+        PaddingLeft: =15
+        Text: ="SecondaryLight"
+        Width: =200
+        X: =633
+        Y: =376
+        ZIndex: =26
+
+    Label1_1 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =27
+
+    Button5_4 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        Text: ="Button"
+        X: =475
+        Y: =452
+        ZIndex: =28
+
+    Button5_5 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.SecondaryDark
+        HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+        HoverFill: =gblTheme.SecondaryLight
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        Text: ="Button"
+        X: =475
+        Y: =505
+        ZIndex: =29
+
+    Button5_6 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Color: =gblTheme.PrimaryDark
+        Fill: =gblTheme.SecondaryLight
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        PressedBorderColor: =gblTheme.PrimaryDark
+        Text: ="Button"
+        X: =652
+        Y: =451
+        ZIndex: =30
+
+    Button5_7 As button:
+        BorderColor: =gblTheme.SecondaryDark
+        Color: =gblTheme.PrimaryDark
+        Fill: =gblTheme.PrimaryLight
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        PressedFill: =gblTheme.SecondaryDark
+        Text: ="Button"
+        X: =652
+        Y: =505
+        ZIndex: =31
+
+    Dropdown2_2 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =colThemes
+        OnChange: |-
+            =Set(gblTheme, Self.Selected);UpdateContext({locResetMenu: !locResetMenu});
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =1020
+        Y: =110
+        ZIndex: =32
+
+    Dropdown2_4 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =DropDownSample
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =102
+        Y: =426
+        ZIndex: =33
+
+    Gallery1_2 As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =313
+        Items: =colThemes
+        Layout: =Layout.Vertical
+        OnSelect: |
+            =Set(
+                gblTheme,
+                ThisItem
+            );
+            Set(gblSpinnerGraphic,
+                Switch(gblTheme.Title,
+                    "ORANGE-BLUE-THEME", 'Graphics-Spinner-Orange-Blue',
+                    "BLUE-THEME", 'Graphics-Spinner-Blue',
+                    "GREEN-THEME", 'Graphics-Spinner-Green',
+                    "RED-THEME", 'Graphics-Spinner-Red',
+                    "EARTH-THEME", 'Graphics-Spinner-Earth',
+                    "POND-THEME", 'Graphics-Spinner-Pond',
+                    "LIGHT-THEME", 'Graphics-Spinner-Light',
+                    "OFFICE-THEME", 'Graphics-Spinner-Office',
+                    'Graphics-Spinner-Orange-Blue'
+                )
+            );
+            UpdateContext({locResetMenu: !locResetMenu});
+        TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =328
+        X: =1020
+        Y: =178
+        ZIndex: =34
+
+        Label2_2 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.Name
+            Width: =Parent.TemplateWidth
+            ZIndex: =1
+
+    Gallery1_5 As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =130
+        Items: =colNavItems
+        Layout: =Layout.Vertical
+        OnSelect: =
+        TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =328
+        X: =1020
+        Y: =615
+        ZIndex: =35
+
+        Label2_5 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.MenuLabel
+            Width: =Parent.TemplateWidth
+            ZIndex: =1
+
+    Button5_18 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |+
+            =Set(
+                gblNewColorPalette,
+                {
+                    Title: "DASHBOARD-THEME",
+                    Name: "Dashboard Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#1f2b3a"),
+                    PrimaryDark: ColorValue("#1f2b3a"),
+                    PrimaryDarkFont: ColorValue("#EAEEF2"),
+                    PrimaryLight: ColorValue("#56aab3"),
+                    PrimaryLightFont: ColorValue("#000000"),
+                    SecondaryDark: ColorValue("#d75b56 "),
+                    SecondaryDarkFont: ColorValue("#EAEEF2"),
+                    SecondaryLight: ColorValue("#ebaf58"),
+                    SecondaryLightFont: ColorValue("#000000"),
+                    BodyBackground: ColorValue("#dfdfdf"),
+                    BodyBackgroundFont: ColorValue("#000000"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#ebaf58"),
+                        70%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#732773"),
+                        70%
+                    ),
+                    SpinnerGraphic: 'Graphics-Spinner-Dashboard'
+                }
+            );
+            Set(
+                gblTheme,
+                gblNewColorPalette
+            );
+            UpdateContext({locResetMenu: !locResetMenu});
+            
+        RadiusBottomLeft: =7
+        RadiusBottomRight: =7
+        RadiusTopLeft: =7
+        RadiusTopRight: =7
+        Text: ="Create New Color Palette"
+        Width: =328
+        X: =1020
+        Y: =505
+        ZIndex: =36
+
+    Rectangle1 As rectangle:
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =80
+        Y: =160
+        ZIndex: =37
+
+    "'SIDE NAV_8' As compSideNavMenu":
+        AutoRefreshColors: =locResetMenu
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_8'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_8'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =42
+
+    "'SPINNER GROUP_8' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =42
+
+        recSpinner_8 As rectangle:
+            BorderColor: =Self.Fill
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =43
+
+        imgSpinner_8 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =321
+            ZIndex: =44
+
+    Button5_10 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: =Set(gblShowSpinner, !gblShowSpinner);
+        Text: ="Test Spinner"
+        X: =846
+        Y: =110
+        ZIndex: =45
+
+    Label1_14 As label:
+        Color: =gblTheme.PrimaryDark
+        PaddingLeft: =0
+        Text: |-
+            ="Copy this Gallery:"
+        X: =1020
+        Y: =575
+        ZIndex: =46
+
+    "'SPACER GROUP 99_8' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =46
+
+        Rectangle5_57 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =38
+
+        Rectangle5_56 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =39
+
+        Rectangle5_55 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =40
+
+        Rectangle5_54 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =41
+

@@ -1,0 +1,122 @@
+{
+  "4fa5b4c1-2d80-46d5-8da7-ab8d0ab6e3ea": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1593/1.0.1593.2980/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "4fa5b4c1-2d80-46d5-8da7-ab8d0ab6e3ea"
+  },
+  "8ad4f35b-3f10-4e32-9063-37d33e39d704": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Outlook",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1599/1.0.1599.3017/office365/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Outlook"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "8ad4f35b-3f10-4e32-9063-37d33e39d704"
+  },
+  "bc6ee3f3-624e-4c2f-8184-99d7de73e89b": {
+    "connectionParameters": {
+      "sku": "Enterprise"
+    },
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1607/1.0.1607.3068/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://jumpmustangsky.sharepoint.com/sites/TicketingSystem": {
+        "dataSources": {
+          "AssignmentTypes": {
+            "tableName": "e747a45c-9471-4785-baed-aaa490fa6522"
+          },
+          "Departments": {
+            "tableName": "54e6fec5-f0f3-4ba6-a7a8-a2a7e850ef86"
+          },
+          "RequestAssignments": {
+            "tableName": "4d44216d-9f20-4b09-a4b1-34621b5efb2f"
+          },
+          "RequestCategories": {
+            "tableName": "b218c3d7-9e59-4e68-8add-eef8b002ab1c"
+          },
+          "RequestImages": {
+            "tableName": "94ab9728-ee64-4609-9b9e-dc60e481fe6c"
+          },
+          "RequestNotes": {
+            "tableName": "2d6c2f99-8a7e-4b14-83aa-52eea7275d98"
+          },
+          "RequestPriorities": {
+            "tableName": "ebf08dc4-e4e4-49ab-a924-b611e8b9257e"
+          },
+          "Requests": {
+            "tableName": "920ee244-d0cd-4d59-a5c1-bb47407f7c0e"
+          },
+          "RequestSLAViolations": {
+            "tableName": "96b51eb4-35c0-4aa4-b424-a043c2be5580"
+          },
+          "RequestStatuses": {
+            "tableName": "2106be51-bb60-49e3-ab56-416cdffd9ef6"
+          },
+          "Screen Use": {
+            "tableName": "ea0805ef-eb11-4527-b299-80106e19ddfa"
+          },
+          "ShowLevels": {
+            "tableName": "c31fadf5-7f9e-4aac-bbdf-3c6a2ed86f5a"
+          },
+          "SLAViolations": {
+            "tableName": "1cdb1696-fa79-401a-b975-5ad312491fe8"
+          },
+          "Users": {
+            "tableName": "7d3dfae3-5f96-42fb-ad11-be637f87b14c"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "AssignmentTypes",
+      "Departments",
+      "RequestAssignments",
+      "RequestCategories",
+      "RequestImages",
+      "RequestNotes",
+      "RequestPriorities",
+      "Requests",
+      "RequestSLAViolations",
+      "RequestStatuses",
+      "ShowLevels",
+      "SLAViolations",
+      "Users",
+      "Screen Use"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "bc6ee3f3-624e-4c2f-8184-99d7de73e89b"
+  }
+}

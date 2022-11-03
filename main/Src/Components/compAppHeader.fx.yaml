@@ -1,0 +1,68 @@
+compAppHeader As CanvasComponent:
+    ApplicationName: ="Application Name Heading"
+    ColorPrimaryDark: |-
+        =ColorValue("#1A2C3F")
+    ColorPrimaryDarkFont: =White
+    Fill: =compAppHeader.ColorPrimaryDark
+    Height: =100
+    LogoImage: =Logo
+    ProfileForeColor: =White
+    ProfileLine1: =User().FullName
+    ProfileLine2: =User().Email
+    ProfilePhoto: =User().Image
+    Width: =1366
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    imgLogo As image:
+        Image: =compAppHeader.LogoImage
+        Width: =361
+        X: =10
+        ZIndex: =1
+
+    lblApplicationText As label:
+        Color: =compAppHeader.ColorPrimaryDarkFont
+        Font: =Font.'Dancing Script'
+        Height: =100
+        LineHeight: =1.3
+        Size: =40
+        Text: =compAppHeader.ApplicationName
+        Width: =637
+        X: =421
+        ZIndex: =2
+
+    imgProfile As image:
+        BorderColor: =compAppHeader.ProfileForeColor
+        BorderThickness: =2
+        Height: =80
+        Image: =compAppHeader.ProfilePhoto
+        RadiusBottomLeft: =80
+        RadiusBottomRight: =80
+        RadiusTopLeft: =80
+        RadiusTopRight: =80
+        Width: =80
+        X: =1276
+        Y: =10
+        ZIndex: =3
+
+    lblProfileLine1 As label:
+        Align: =Align.Right
+        Color: =compAppHeader.ProfileForeColor
+        Size: =14
+        Text: =compAppHeader.ProfileLine1
+        Width: =300
+        X: =960
+        Y: =10
+        ZIndex: =4
+
+    lblProfileLine2 As label:
+        Align: =Align.Right
+        Color: =compAppHeader.ProfileForeColor
+        Size: =14
+        Text: =compAppHeader.ProfileLine2
+        Width: =300
+        X: =960
+        Y: =50
+        ZIndex: =5
+

@@ -1,0 +1,538 @@
+"'Edit Request Statuses Screen OLD' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        UpdateContext({locNewRecord: true});
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    Rectangle1_28 As rectangle:
+        BorderColor: =ColorFade(Self.Fill, -10%)
+        BorderThickness: =2
+        Fill: =gblTheme.PrimaryLight
+        Height: =141
+        Width: =795
+        X: =550
+        Y: =180
+        ZIndex: =1
+
+    "'SCREEN HEADER_17' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_17'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+        ZIndex: =2
+
+    "'APP HEADER_19' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_19'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =3
+
+    "'SPINNER GROUP_16' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+        recSpinner_16 As rectangle:
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =29
+
+        imgSpinner_17 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =321
+            ZIndex: =30
+
+    icoShowDebug_12 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =4
+
+    galDropDownValues_1 As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =340
+        Items: =Sort(RequestPriorities, SortOrder)
+        Layout: =Layout.Vertical
+        OnSelect: |-
+            =UpdateContext({locNewRecord: false});
+        TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =796
+        X: =549
+        Y: =381
+        ZIndex: =5
+
+        Label2_13 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.Title
+            Width: =lblGalleryValue_1.Width
+            X: =lblGalleryValue_1.X - Parent.X
+            ZIndex: =1
+
+        Label2_12 As label:
+            Align: =Align.Right
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            PaddingRight: =Self.Width /3
+            Text: =ThisItem.ID
+            Width: =lblGalleryID_1.Width
+            X: =lblGalleryID_1.X - Parent.X
+            ZIndex: =2
+
+        Label2_14 As label:
+            Align: =Align.Right
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            PaddingRight: =Self.Width / 2
+            Text: =ThisItem.SortOrder
+            Width: =lblGallerySortOrder_1.Width
+            X: =lblGallerySortOrder_1.X - Parent.X
+            ZIndex: =3
+
+        grpIsActive_1 As group:
+            Height: =5
+            Width: =5
+            X: =40
+            Y: =40
+            ZIndex: =6
+
+            cirIsActive_2 As circle:
+                Fill: =RGBA(152, 208, 70, 1)
+                Height: =Parent.TemplateHeight - 4
+                OnSelect: =Select(Parent)
+                Visible: =ThisItem.IsActive
+                Width: =Self.Height
+                X: =636
+                Y: =2
+                ZIndex: =4
+
+            icoIsActive_2 As icon.Check:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =cirIsActive_2.Height
+                Icon: =Icon.Check
+                OnSelect: =Select(Parent)
+                PaddingBottom: =6
+                PaddingLeft: =6
+                PaddingRight: =6
+                PaddingTop: =6
+                Visible: =ThisItem.IsActive
+                Width: =cirIsActive_2.Width
+                X: =cirIsActive_2.X
+                Y: =cirIsActive_2.Y
+                ZIndex: =5
+
+        grpDelete_1 As group:
+            Height: =5
+            Width: =5
+            X: =-596
+            Y: =2
+            ZIndex: =8
+
+            cirIsActive_3 As circle:
+                Fill: =RGBA(184, 0, 0, 1)
+                Height: =Parent.TemplateHeight - 4
+                OnSelect: |
+                    =Select(Parent);
+                    Set(
+                        gblShowSpinner,
+                        true
+                    );
+                    Remove(
+                        RequestPriorities,
+                        ThisItem
+                    );
+                    Set(
+                        gblShowSpinner,
+                        false
+                    );
+                Visible: =gblShowDebugging And ThisItem.IsSelected
+                Width: =Self.Height
+                X: =727
+                Y: =2
+                ZIndex: =6
+
+            icoIsActive_3 As icon.Check:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =cirIsActive_3.Height
+                Icon: =Icon.Trash
+                OnSelect: |
+                    =Select(Parent);
+                    Set(
+                        gblShowSpinner,
+                        true
+                    );
+                    Remove(
+                        RequestPriorities,
+                        ThisItem
+                    );
+                    Set(
+                        gblShowSpinner,
+                        false
+                    );
+                PaddingBottom: =6
+                PaddingLeft: =6
+                PaddingRight: =6
+                PaddingTop: =6
+                Visible: =gblShowDebugging And ThisItem.IsSelected
+                Width: =cirIsActive_3.Width
+                X: =727
+                Y: =2
+                ZIndex: =7
+
+    Label1_21 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =29
+        PaddingLeft: =0
+        Text: |-
+            ="Value:"
+        Width: =441
+        X: =563
+        Y: =203
+        ZIndex: =6
+
+    txtValue_1 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: |-
+            =If(
+                locNewRecord,
+                "",
+                galDropDownValues_1.Selected.Title
+            )
+        Height: =45
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Width: =300
+        X: =563
+        Y: =232
+        ZIndex: =7
+
+    btnSave_1 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        DisplayMode: =If(Len(Trim(txtValue_1.Text)) > 0, DisplayMode.Edit,DisplayMode.Disabled)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            Patch(
+                RequestPriorities,
+                If(locNewRecord,
+                Defaults(RequestPriorities),
+                galDropDownValues_1.Selected
+                ),
+                {
+                    Title:              txtValue_1.Text,
+                    SortOrder:          Value(txtSortOrder_1.Text),
+                    IsActive:           togIsActive_1.Value
+                }
+            );
+            Set(gblShowSpinner, false);
+        Text: ="Save"
+        X: =1165
+        Y: =258
+        ZIndex: =8
+
+    btnAddNew_1 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.SecondaryDark
+        HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+        HoverFill: =gblTheme.SecondaryLight
+        OnSelect: |-
+            =UpdateContext({locNewRecord: true});
+        Text: ="Add New"
+        X: =1165
+        Y: =203
+        ZIndex: =9
+
+    Label1_22 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        PaddingLeft: =0
+        Text: |-
+            ="Sort Order:"
+        X: =878
+        Y: =204
+        ZIndex: =10
+
+    txtSortOrder_1 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: |-
+            =If(
+                locNewRecord,
+                "",
+                galDropDownValues_1.Selected.SortOrder
+            )
+        Format: =TextFormat.Number
+        Height: =45
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Width: =150
+        X: =878
+        Y: =232
+        ZIndex: =11
+
+    Label1_20 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =12
+
+    Rectangle5_71 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =765
+        Y: =160
+        ZIndex: =18
+
+    Label1_23 As label:
+        Align: =Align.Right
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        PaddingLeft: =0
+        Text: ="Is Active?"
+        X: =976
+        Y: =208
+        ZIndex: =20
+
+    togIsActive_1 As toggleSwitch:
+        BorderColor: =RGBA(0, 18, 107, 0)
+        Default: |-
+            =If(
+                locNewRecord,
+                true,
+                galDropDownValues_1.Selected.IsActive
+            )
+        TrueFill: =gblTheme.PrimaryDark
+        X: =1046
+        Y: =238
+        ZIndex: =21
+
+    "'SPACER GROUP 99_11' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =22
+
+        Rectangle5_72 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =13
+
+        Rectangle5_74 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =14
+
+        Rectangle5_73 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =15
+
+        Rectangle5_69 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =16
+
+    Gallery1_7 As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Default: =LookUp(colDropDownListNames, ScreenToGoTo.Name = App.ActiveScreen.Name)
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =314
+        Items: |-
+            =Sort(
+                colDropDownListNames,
+                SortOrder
+            )
+        Layout: =Layout.Vertical
+        OnSelect: =Navigate(ThisItem.ScreenToGoTo,Fade);
+        TemplateFill: =If(ThisItem.IsSelected, LightYellow, White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =428
+        X: =100
+        Y: =210
+        ZIndex: =26
+
+        Label2_11 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.Title
+            Width: =Parent.TemplateWidth
+            ZIndex: =1
+
+    Rectangle5_70 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =528
+        Y: =160
+        ZIndex: =27
+
+    "'SIDE NAV_17' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_17'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_17'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =28
+
+    Label1_26 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        PaddingLeft: =15
+        Size: =16
+        Text: ="Manage Drop Down Lists"
+        Width: =galDropDownLists.Width
+        X: =100
+        Y: =180
+        ZIndex: =31
+
+    grpGalleryHeader_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =31
+
+        retGalleryHeaderBar_1 As rectangle:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Fill: =gblTheme.PrimaryDark
+            Height: =50
+            Width: =galDropDownValues_1.Width
+            X: =galDropDownValues_1.X
+            Y: =galDropDownValues_1.Y - Self.Height
+            ZIndex: =17
+
+        lblGalleryID_1 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_1.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="ID"
+            Width: =80
+            X: =retGalleryHeaderBar_1.X
+            Y: =retGalleryHeaderBar_1.Y
+            ZIndex: =19
+
+        lblGalleryValue_1 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_1.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="VALUE"
+            Width: =350
+            X: =retGalleryHeaderBar_1.X + lblGalleryID_1.Width
+            Y: =retGalleryHeaderBar_1.Y
+            ZIndex: =23
+
+        lblGallerySortOrder_1 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_1.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="SORT ORDER"
+            X: =lblGalleryValue_1.X + lblGalleryValue_1.Width
+            Y: =331
+            ZIndex: =24
+
+        lblGalleryIsActive_1 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_1.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="IS ACTIVE?"
+            Width: =175
+            X: =lblGallerySortOrder_1.X + lblGallerySortOrder_1.Width
+            Y: =331
+            ZIndex: =25
+

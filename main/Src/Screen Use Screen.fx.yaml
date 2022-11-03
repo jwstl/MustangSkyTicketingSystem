@@ -1,0 +1,233 @@
+"'Screen Use Screen' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    "'SCREEN HEADER_12' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_12'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+
+    "'APP HEADER_15' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_15'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =2
+
+    icoShowDebug_7 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =3
+
+    "'SPINNER GROUP_12' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+        recSpinner_12 As rectangle:
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =13
+
+        imgSpinner_13 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =321
+            ZIndex: =14
+
+    Button5_12 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |
+            =Set(
+                gblShowSpinner,
+                true
+            );
+            Patch(
+                ScreenUse,
+                Defaults(ScreenUse),
+                {
+                    ApplicationName: gblAppGlobals.ApplicationName,
+                    Title: App.ActiveScreen.Name & " - " & Now(),
+                    ScreenName: App.ActiveScreen.Name,
+                    AppVersion: gblAppGlobals.AppVersion,
+                    UserEmail: Lower(User().Email), 
+                    Info: "Screen.OnVisible",
+                    SessionString: gblSessionText
+                }
+            );
+            Set(
+                gblShowSpinner,
+                false
+            );
+        Text: ="Use Screen"
+        Width: =200
+        X: =124
+        Y: =260
+        ZIndex: =4
+
+    Button5_13 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |
+            =Set(
+                gblShowSpinner,
+                true
+            );
+            Set(gblSessionText, Text(Now(), "mm/dd/yyyy hh:mm:ss.fff AM/PM"));
+            ClearCollect(ScreenUse, 
+                {
+                    ApplicationName: gblAppGlobals.ApplicationName,
+                    Title: App.ActiveScreen.Name & " - " & Now(),
+                    ScreenName: App.ActiveScreen.Name,
+                    AppVersion: gblAppGlobals.AppVersion,
+                    UserEmail: Lower(User().Email), 
+                    Info: "Collection Initialized!",
+                    SessionString: gblSessionText
+                }
+            );
+            Set(
+                gblShowSpinner,
+                false
+            );
+        Text: ="Use Screen"
+        Width: =200
+        X: =124
+        Y: =207
+        ZIndex: =5
+
+    Gallery1_3 As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =566
+        Items: ='Screen Use'
+        Layout: =Layout.Vertical
+        OnSelect: =
+        TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =970
+        X: =374
+        Y: =178
+        ZIndex: =6
+
+        Label2_3 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.Title
+            Width: =Parent.TemplateWidth
+            ZIndex: =1
+
+    Label1_13 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =7
+
+    "'SIDE NAV_12' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_12'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_12'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =12
+
+    "'SPACER GROUP 99_9' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =15
+
+        Rectangle5_61 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =8
+
+        Rectangle5_60 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =9
+
+        Rectangle5_59 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =10
+
+        Rectangle5_58 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =11
+

@@ -1,0 +1,25 @@
+"'Loading Screen' As screen":
+
+    imgSpinner_11 As image:
+        BorderColor: =White
+        BorderStyle: =BorderStyle.Dashed
+        Height: =206
+        Image: =gblTheme.Spinner
+        Width: =206
+        X: =Parent.Width / 2 - Self.Width / 2
+        Y: =Parent.Height / 2 - Self.Height / 2
+        ZIndex: =1
+
+    Label1_5 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =2
+

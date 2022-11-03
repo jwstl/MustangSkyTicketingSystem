@@ -1,0 +1,256 @@
+"'Home Screen' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        
+        UpdateContext(
+            {
+                locStatusCompleteID: LookUp(
+                    RequestStatuses,
+                    StartsWith(
+                        Title,
+                        "Complete"
+                    ),
+                    ID
+                )
+            }
+        );
+        
+        Patch(
+            ScreenUse,
+            Defaults(ScreenUse),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Screen.OnVisible",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    "'SCREEN HEADER_6' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_6'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+
+    "'APP HEADER_12' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_12'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =2
+
+    icoShowDebug_1 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =3
+
+    Label1_6 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =4
+
+    galHomeOpenTickets As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Default: =LookUp(RequestPriorities, IsActive And Title = "Medium")
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =518
+        Items: =Sort(Filter(Requests, RequestStatusID <> locStatusCompleteID), RequestDateTime,Descending)
+        Layout: =Layout.Vertical
+        OnSelect: =
+        TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+        TemplatePadding: =2
+        TemplateSize: =69
+        Width: =819
+        X: =527
+        Y: =230
+        ZIndex: =9
+
+        lblCreatedDate As label:
+            Height: =51
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =Text(ThisItem.RequestDateTime, "mm/dd/yyyy")
+            X: =12
+            Y: =8
+            ZIndex: =1
+
+        Label2_41 As label:
+            Height: =51
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.Subject
+            Width: =lblShortDescription.Width
+            X: =lblShortDescription.X - Parent.X    
+            Y: =8
+            ZIndex: =2
+
+        Image3 As image:
+            Height: =69
+            Image: =graOpenItemPurple
+            OnSelect: |-
+                =Select(Parent);Navigate('Submit Request Screen',Fade,{locRecord: ThisItem});
+            Visible: =ThisItem.IsSelected
+            X: =704
+            ZIndex: =3
+
+    Image1 As image:
+        Height: =586
+        Image: =Robot
+        Width: =512
+        X: =30
+        Y: =162
+        ZIndex: =13
+
+    "'SPACER GROUP 99_2' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =13
+
+        Rectangle5_33 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =5
+
+        Rectangle5_32 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =6
+
+        Rectangle5_31 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =7
+
+        Rectangle5_30 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =8
+
+    "'SIDE NAV_6' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_6'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_6'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =17
+
+    grpGalleryHeader_7 As group:
+        Height: =5
+        Width: =5
+        X: =446
+        Y: =40
+        ZIndex: =20
+
+        retGalleryHeaderBar_7 As rectangle:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Fill: =gblTheme.PrimaryDark
+            Height: =50
+            Width: =galHomeOpenTickets.Width
+            X: =527
+            Y: =180
+            ZIndex: =10
+
+        lblGalleryValue_7 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_7.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="CREATED"
+            Width: =lblCreatedDate.Width
+            X: =527
+            Y: =180
+            ZIndex: =11
+
+        lblShortDescription As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_7.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="SHORT DESCRIPTION"
+            Width: =500
+            X: =661
+            Y: =180
+            ZIndex: =12
+
+    "'SPINNER GROUP_6' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =22
+
+        recSpinner_6 As rectangle:
+            BorderColor: =Self.Fill
+            BorderThickness: =2
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =15
+
+        imgSpinner_6 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =321
+            ZIndex: =16
+

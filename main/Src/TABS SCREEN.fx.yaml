@@ -1,0 +1,376 @@
+"'TABS SCREEN' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    "'SCREEN HEADER_16' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_16'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+
+    "'APP HEADER_13' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_13'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =2
+
+    icoShowDebug_11 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =3
+
+    "'SPINNER GROUP_17' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+        recSpinner_18 As rectangle:
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =15
+
+        imgSpinner_19 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =321
+            ZIndex: =16
+
+    Label1_15 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =4
+
+    cntTab1 As groupContainer.manualLayoutContainer:
+        Height: =shpTabsBackground.Height
+        Visible: =galTabs.Selected.Value = "Tab 1"
+        Width: =shpTabsBackground.Width
+        X: =shpTabsBackground.X
+        Y: =shpTabsBackground.Y
+        ZIndex: =11
+
+        lblTab1 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            PaddingLeft: =0
+            Text: ="Sample Field"
+            Visible: =galTabs.Selected.Value = "Tab 1"
+            Width: =400
+            X: =20
+            Y: =20
+            ZIndex: =1
+
+        txtTab1 As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: =User().FullName & " - " & Now()
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.ControlHoverColor
+            Visible: =galTabs.Selected.Value = "Tab 1"
+            Width: =400
+            X: =20
+            Y: =50
+            ZIndex: =2
+
+        Rectangle5_18 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            ZIndex: =3
+
+        Rectangle5_19 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1226
+            ZIndex: =4
+
+        Rectangle5_20 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            Y: =492
+            ZIndex: =5
+
+        Rectangle5_21 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1226
+            Y: =492
+            ZIndex: =6
+
+    cntTab2 As groupContainer.manualLayoutContainer:
+        Height: =shpTabsBackground.Height
+        Visible: =galTabs.Selected.Value = "Tab 2"
+        Width: =shpTabsBackground.Width
+        X: =shpTabsBackground.X
+        Y: =shpTabsBackground.Y
+        ZIndex: =12
+
+        lblTab1_1 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            PaddingLeft: =0
+            Text: ="Sample Field"
+            Width: =400
+            X: =20
+            Y: =20
+            ZIndex: =1
+
+        txtTab1_1 As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: ="Tab 1"
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.ControlHoverColor
+            Width: =400
+            X: =20
+            Y: =50
+            ZIndex: =2
+
+        Rectangle5_22 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            ZIndex: =3
+
+        Rectangle5_23 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1226
+            ZIndex: =4
+
+        Rectangle5_24 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            Y: =492
+            ZIndex: =5
+
+        Rectangle5_25 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1226
+            Y: =492
+            ZIndex: =6
+
+    cntTab3 As groupContainer.manualLayoutContainer:
+        Height: =shpTabsBackground.Height
+        Visible: =galTabs.Selected.Value = "Tab 3"
+        Width: =shpTabsBackground.Width
+        X: =shpTabsBackground.X
+        Y: =shpTabsBackground.Y
+        ZIndex: =13
+
+        lblTab1_2 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            PaddingLeft: =0
+            Text: ="Sample Field"
+            Width: =400
+            X: =20
+            Y: =20
+            ZIndex: =1
+
+        txtTab1_2 As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: ="Tab 3"
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.ControlHoverColor
+            Width: =400
+            X: =20
+            Y: =50
+            ZIndex: =2
+
+        Rectangle5_26 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            ZIndex: =3
+
+        Rectangle5_27 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1226
+            ZIndex: =4
+
+        Rectangle5_28 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            Y: =492
+            ZIndex: =5
+
+        Rectangle5_29 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1226
+            Y: =492
+            ZIndex: =6
+
+    "'SIDE NAV_15' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_15'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_15'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =14
+
+    "'SPACER GROUP 99_1' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =14
+
+        Rectangle5_17 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =5
+
+        Rectangle5_16 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =6
+
+        Rectangle5_15 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =7
+
+        Rectangle5_14 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =8
+
+    TABS_1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =15
+
+        galTabs As gallery.galleryHorizontal:
+            Height: =224
+            Items: =["Tab 1", "Tab 2", "Tab 3"]
+            TemplatePadding: =3
+            TemplateSize: =200
+            Width: =1216
+            X: =109
+            Y: =180
+            ZIndex: =9
+
+            Button5_22 As button:
+                BorderColor: =ColorFade(Self.Fill, -40%)
+                Fill: =If(ThisItem.IsSelected, gblTheme.SecondaryDark, gblTheme.PrimaryDark)
+                Height: =112
+                HoverFill: =gblTheme.PrimaryLight //ColorFade(gblTheme.SecondaryDark, 10%)
+                OnSelect: |-
+                    =Set(gblShowSpinner, true);
+                    
+                    Set(gblShowSpinner, false);
+                PaddingTop: =10
+                Text: =ThisItem.Value
+                VerticalAlign: =VerticalAlign.Top
+                Width: =Parent.TemplateWidth
+                ZIndex: =2
+
+        shpTabsBackground As rectangle:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Fill: =gblTheme.PrimaryLight
+            Height: =512
+            Width: =1246
+            X: =100
+            Y: =235
+            ZIndex: =10
+

@@ -1,0 +1,708 @@
+"'Edit Request Statuses Screen' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        UpdateContext({locNewRecord: true});
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    Rectangle1_29 As rectangle:
+        BorderColor: =ColorFade(Self.Fill, -10%)
+        BorderThickness: =2
+        Fill: =gblTheme.PrimaryLight
+        Height: =123
+        Width: =920
+        X: =446
+        Y: =212
+        ZIndex: =1
+
+    "'SCREEN HEADER_18' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_18'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+        ZIndex: =2
+
+    "'APP HEADER_20' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_20'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =3
+
+    "'SPINNER GROUP_18' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+        recSpinner_17 As rectangle:
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =36
+
+        imgSpinner_18 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =353
+            ZIndex: =37
+
+    icoShowDebug_13 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =4
+
+    galDropDownValues_2 As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =340
+        Items: =Sort(RequestStatuses, SortOrder)
+        Layout: =Layout.Vertical
+        OnSelect: |-
+            =UpdateContext({locNewRecord: false});
+        TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =898
+        X: =446
+        Y: =401
+        ZIndex: =5
+
+        Label2_18 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.Title
+            Width: =lblGalleryValue_2.Width
+            X: =lblGalleryValue_2.X - Parent.X
+            ZIndex: =1
+
+        Label2_17 As label:
+            Align: =Align.Right
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            PaddingRight: =Self.Width /3
+            Text: =ThisItem.ID
+            Width: =lblGalleryID_2.Width
+            X: =lblGalleryID_2.X - Parent.X
+            ZIndex: =2
+
+        Label2_19 As label:
+            Align: =Align.Right
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            PaddingRight: =Self.Width / 2
+            Text: =ThisItem.SortOrder
+            Width: =lblGallerySortOrder_2.Width
+            X: =lblGallerySortOrder_2.X - Parent.X
+            ZIndex: =3
+
+        grpIsActive_2 As group:
+            Height: =5
+            Width: =5
+            X: =40
+            Y: =40
+            ZIndex: =6
+
+            cirIsActive_4 As circle:
+                Fill: =RGBA(152, 208, 70, 1)
+                Height: =Parent.TemplateHeight - 4
+                OnSelect: =Select(Parent)
+                Visible: =ThisItem.IsActive
+                Width: =Self.Height
+                X: =636
+                Y: =2
+                ZIndex: =4
+
+            icoIsActive_4 As icon.Check:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =cirIsActive_4.Height
+                Icon: =Icon.Check
+                OnSelect: =Select(Parent)
+                PaddingBottom: =6
+                PaddingLeft: =6
+                PaddingRight: =6
+                PaddingTop: =6
+                Visible: =ThisItem.IsActive
+                Width: =cirIsActive_4.Width
+                X: =cirIsActive_4.X
+                Y: =cirIsActive_4.Y
+                ZIndex: =5
+
+        grpDelete_2 As group:
+            Height: =5
+            Width: =5
+            X: =-596
+            Y: =2
+            ZIndex: =8
+
+            cirIsActive_5 As circle:
+                Fill: =RGBA(184, 0, 0, 1)
+                Height: =Parent.TemplateHeight - 4
+                OnSelect: |
+                    =Select(Parent);
+                    Set(
+                        gblShowSpinner,
+                        true
+                    );
+                    Remove(
+                        RequestPriorities,
+                        ThisItem
+                    );
+                    Set(
+                        gblShowSpinner,
+                        false
+                    );
+                Visible: =gblShowDebugging And ThisItem.IsSelected
+                Width: =Self.Height
+                X: =727
+                Y: =2
+                ZIndex: =6
+
+            icoIsActive_5 As icon.Check:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =cirIsActive_5.Height
+                Icon: =Icon.Trash
+                OnSelect: |
+                    =Select(Parent);
+                    Set(
+                        gblShowSpinner,
+                        true
+                    );
+                    Remove(
+                        RequestPriorities,
+                        ThisItem
+                    );
+                    Set(
+                        gblShowSpinner,
+                        false
+                    );
+                PaddingBottom: =6
+                PaddingLeft: =6
+                PaddingRight: =6
+                PaddingTop: =6
+                Visible: =gblShowDebugging And ThisItem.IsSelected
+                Width: =cirIsActive_5.Width
+                X: =727
+                Y: =2
+                ZIndex: =7
+
+        icoMoveUp As icon.ChevronUp:
+            Height: =50
+            Icon: =Icon.ChevronUp
+            OnSelect: |
+                =Select(Parent);
+                Set(
+                    gblShowSpinner,
+                    true
+                );
+                Patch(
+                    RequestStatuses,
+                    ThisItem,
+                    {SortOrder: ThisItem.SortOrder - 1.5}
+                );
+                ClearCollect(
+                    colTempStatuses,
+                    Sort(
+                        DropColumns(
+                            RequestStatuses,
+                            "{VersionNumber}",
+                            "Modified"
+                        ),
+                        SortOrder
+                    )
+                );
+                ForAll(
+                    Sequence(CountRows(colTempStatuses)),
+                    Patch(
+                        colTempStatuses,
+                        Index(
+                            Sort(
+                                colTempStatuses,
+                                SortOrder
+                            ),
+                            Value
+                        ),
+                        {SortOrder: Value}
+                    );
+                    
+                );
+                Patch(
+                    RequestStatuses,
+                    colTempStatuses
+                );
+                Set(
+                    gblShowSpinner,
+                    false
+                );
+            Visible: =ThisItem.SortOrder <> Min(RequestStatuses, SortOrder)
+            X: =412
+            ZIndex: =9
+
+        icoMoveDown As icon.ChevronDown:
+            Height: =50
+            Icon: =Icon.ChevronDown
+            OnSelect: |
+                =Select(Parent);
+                Set(
+                    gblShowSpinner,
+                    true
+                );
+                Patch(
+                    RequestStatuses,
+                    ThisItem,
+                    {SortOrder: ThisItem.SortOrder + 1.5}
+                );
+                ClearCollect(
+                    colTempStatuses,
+                    Sort(
+                        DropColumns(
+                            RequestStatuses,
+                            "{VersionNumber}",
+                            "Modified"
+                        ),
+                        SortOrder
+                    )
+                );
+                ForAll(
+                    Sequence(CountRows(colTempStatuses)),
+                    Patch(
+                        colTempStatuses,
+                        Index(
+                            Sort(
+                                colTempStatuses,
+                                SortOrder
+                            ),
+                            Value
+                        ),
+                        {SortOrder: Value}
+                    );
+                    
+                );
+                Patch(
+                    RequestStatuses,
+                    colTempStatuses
+                );
+                Set(
+                    gblShowSpinner,
+                    false
+                );
+            Visible: =ThisItem.SortOrder <> Max(RequestStatuses, SortOrder)
+            X: =535
+            ZIndex: =10
+
+    Label1_30 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =29
+        PaddingLeft: =0
+        Text: |-
+            ="Value:"
+        Width: =441
+        X: =465
+        Y: =227
+        ZIndex: =6
+
+    btnSave_2 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        DisplayMode: =If(Len(Trim(txtValue_2.Text)) > 0, DisplayMode.Edit,DisplayMode.Disabled)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            Patch(
+                RequestStatuses,
+                If(locNewRecord,
+                Defaults(RequestStatuses),
+                galDropDownValues_2.Selected
+                ),
+                {
+                    Title:              txtValue_2.Text,
+                    SortOrder:          Value(txtSortOrder_2.Text),
+                    IsActive:           togIsActive_2.Value
+                }
+            );
+            Set(gblShowSpinner, false);
+        Text: ="Save"
+        Width: =120
+        X: =1206
+        Y: =267
+        ZIndex: =7
+
+    btnAddNew_2 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.SecondaryDark
+        HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+        HoverFill: =gblTheme.SecondaryLight
+        OnSelect: |-
+            =UpdateContext({locNewRecord: true});
+        Text: ="Add New"
+        Width: =120
+        X: =1066
+        Y: =267
+        ZIndex: =8
+
+    txtSortOrder_2 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: |-
+            =If(
+                locNewRecord,
+                Max(RequestStatuses, SortOrder) + 1,
+                galDropDownValues_2.Selected.SortOrder
+            )
+        Format: =TextFormat.Number
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Width: =150
+        X: =786
+        Y: =260
+        ZIndex: =10
+
+    Label1_28 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =11
+
+    Rectangle5_84 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =765
+        Y: =192
+        ZIndex: =17
+
+    Label1_32 As label:
+        Align: =Align.Right
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        PaddingLeft: =0
+        Text: ="Is Active?"
+        X: =884
+        Y: =233
+        ZIndex: =19
+
+    togIsActive_2 As toggleSwitch:
+        BorderColor: =RGBA(0, 18, 107, 0)
+        Default: |-
+            =If(
+                locNewRecord,
+                true,
+                galDropDownValues_2.Selected.IsActive
+            )
+        TrueFill: =gblTheme.PrimaryDark
+        X: =954
+        Y: =271
+        ZIndex: =20
+
+    "'SPACER GROUP 99_12' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =22
+
+        Rectangle5_85 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =192
+            ZIndex: =12
+
+        Rectangle5_87 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =724
+            ZIndex: =13
+
+        Rectangle5_86 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =724
+            ZIndex: =14
+
+        Rectangle5_82 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =192
+            ZIndex: =15
+
+    Gallery1_8 As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Default: =LookUp(colDropDownListNames, ScreenToGoTo.Name = App.ActiveScreen.Name)
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =314
+        Items: |-
+            =Sort(
+                colDropDownListNames,
+                SortOrder
+            )
+        Layout: =Layout.Vertical
+        OnSelect: =Navigate(ThisItem.ScreenToGoTo, Fade);
+        TemplateFill: =If(ThisItem.IsSelected, LightYellow, White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =300
+        X: =101
+        Y: =202
+        ZIndex: =24
+
+        Label2_16 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.Title
+            Width: =Parent.TemplateWidth
+            ZIndex: =1
+
+    Rectangle5_83 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =528
+        Y: =192
+        ZIndex: =25
+
+    Label1_29 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        PaddingLeft: =15
+        Size: =16
+        Text: ="Manage Drop Down Lists"
+        Width: =galDropDownLists.Width
+        X: =100
+        Y: =172
+        ZIndex: =26
+
+    Rectangle5_88 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =1325
+        Y: =272
+        ZIndex: =27
+
+    Rectangle5_89 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =446
+        Y: =213
+        ZIndex: =28
+
+    Rectangle5_90 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =766
+        Y: =274
+        ZIndex: =29
+
+    Rectangle5_91 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =1185
+        Y: =276
+        ZIndex: =30
+
+    Rectangle5_92 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =1045
+        Y: =278
+        ZIndex: =31
+
+    grpGalleryHeader_2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =31
+
+        retGalleryHeaderBar_2 As rectangle:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Fill: =gblTheme.PrimaryDark
+            Height: =50
+            Width: =galDropDownValues_2.Width
+            X: =galDropDownValues_2.X
+            Y: =351
+            ZIndex: =16
+
+        lblGalleryID_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_2.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="ID"
+            Width: =80
+            X: =retGalleryHeaderBar_2.X
+            Y: =351
+            ZIndex: =18
+
+        lblGalleryValue_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_2.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="VALUE"
+            Width: =350
+            X: =retGalleryHeaderBar_2.X + lblGalleryID_2.Width
+            Y: =351
+            ZIndex: =21
+
+        lblGallerySortOrder_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_2.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="SORT ORDER"
+            X: =lblGalleryValue_2.X + lblGalleryValue_2.Width
+            Y: =351
+            ZIndex: =22
+
+        lblGalleryIsActive_2 As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =retGalleryHeaderBar_2.Height
+            PaddingLeft: =15
+            Size: =15
+            Text: ="IS ACTIVE?"
+            Width: =175
+            X: =lblGallerySortOrder_2.X + lblGallerySortOrder_2.Width
+            Y: =351
+            ZIndex: =23
+
+    Rectangle5_93 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =446
+        Y: =272
+        ZIndex: =32
+
+    Rectangle5_94 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =937
+        Y: =274
+        ZIndex: =33
+
+    Label1_33 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        PaddingLeft: =15
+        Size: =16
+        Text: ="Add/Edit Drop Down List Values"
+        Width: =galDropDownLists.Width
+        X: =446
+        Y: =173
+        ZIndex: =34
+
+    "'SIDE NAV_18' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_18'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_18'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =35
+
+    txtValue_2 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: |-
+            =If(
+                locNewRecord,
+                "",
+                galDropDownValues_2.Selected.Title
+            )
+        Height: =45
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Width: =475
+        X: =466
+        Y: =259
+        ZIndex: =38
+

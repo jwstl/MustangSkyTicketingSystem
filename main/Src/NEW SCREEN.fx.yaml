@@ -1,0 +1,333 @@
+"'NEW SCREEN' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    Rectangle1_26 As rectangle:
+        BorderColor: =ColorFade(Self.Fill, -10%)
+        BorderThickness: =2
+        Fill: =gblTheme.PrimaryLight
+        Height: =568
+        Width: =560
+        X: =786
+        Y: =180
+        ZIndex: =1
+
+    "'SCREEN HEADER_7' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_7'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+        ZIndex: =2
+
+    "'APP HEADER_16' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_16'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =3
+
+    "'SPINNER GROUP_7' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+        recSpinner_7 As rectangle:
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =24
+
+        imgSpinner_7 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =Parent.Width / 2 - Self.Width / 2
+            Y: =321
+            ZIndex: =25
+
+    icoShowDebug_2 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =4
+
+    galNewScreenListing As gallery.galleryVertical:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderThickness: =2
+        Fill: =RGBA(230, 230, 230, 1)
+        Height: =518
+        Items: ='Screen Use'
+        Layout: =Layout.Vertical
+        OnSelect: =
+        TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+        TemplatePadding: =2
+        TemplateSize: =50
+        Width: =665
+        X: =100
+        Y: =230
+        ZIndex: =5
+
+        Label2_4 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.ScreenName
+            Width: =lblColumnHeading1.Width
+            X: =lblColumnHeading1.X - Parent.X
+            ZIndex: =1
+
+        Label2_6 As label:
+            Height: =Parent.TemplateHeight
+            OnSelect: =Select(Parent)
+            PaddingLeft: =15
+            Text: =ThisItem.SessionString
+            Width: =lblColumnHeading2.Width
+            X: =lblColumnHeading2.X - Parent.X
+            ZIndex: =2
+
+    Label1_2 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        PaddingLeft: =0
+        Text: |-
+            ="Title:"
+        Width: =500
+        X: =811
+        Y: =205
+        ZIndex: =6
+
+    TextInput1_1 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: =galNewScreenListing.Selected.Title
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Width: =500
+        X: =811
+        Y: =235
+        ZIndex: =7
+
+    Button5_16 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.SecondaryDark
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        Text: ="Save"
+        X: =1144
+        Y: =684
+        ZIndex: =8
+
+    Button5_17 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.SecondaryDark
+        HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+        HoverFill: =gblTheme.SecondaryLight
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        Text: ="Add New"
+        X: =966
+        Y: =684
+        ZIndex: =9
+
+    Label1_3 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        PaddingLeft: =0
+        Text: |-
+            ="Screen Name:"
+        Width: =500
+        X: =811
+        Y: =282
+        ZIndex: =10
+
+    TextInput1_2 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: =galNewScreenListing.Selected.ScreenName
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Width: =500
+        X: =811
+        Y: =312
+        ZIndex: =11
+
+    Label1_4 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        PaddingLeft: =0
+        Text: |-
+            ="Notes:"
+        Width: =500
+        X: =811
+        Y: =359
+        ZIndex: =12
+
+    TextInput1_3 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: =galNewScreenListing.Selected.ScreenName & " notes.." & Char(13) & galNewScreenListing.Selected.Title
+        Height: =267
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Mode: =TextMode.MultiLine
+        PaddingTop: =10
+        Width: =500
+        X: =811
+        Y: =389
+        ZIndex: =13
+
+    Label1_8 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =14
+
+    Rectangle2 As rectangle:
+        BorderColor: =Self.Fill
+        BorderThickness: =2
+        Fill: =gblTheme.PrimaryDark
+        Height: =50
+        Width: =galNewScreenListing.Width
+        X: =galNewScreenListing.X
+        Y: =galNewScreenListing.Y - Self.Height
+        ZIndex: =19
+
+    Rectangle5_62 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =765
+        Y: =160
+        ZIndex: =20
+
+    lblColumnHeading1 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =Rectangle2.Height
+        PaddingLeft: =15
+        Size: =15
+        Text: ="COLUMN HEADING"
+        Width: =310
+        X: =Rectangle2.X
+        Y: =Rectangle2.Y
+        ZIndex: =21
+
+    lblColumnHeading2 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =Rectangle2.Height
+        PaddingLeft: =15
+        Size: =15
+        Text: ="COLUMN HEADING"
+        Width: =310
+        X: =lblColumnHeading1.X + lblColumnHeading1.Width
+        Y: =Rectangle2.Y
+        ZIndex: =22
+
+    "'SPACER GROUP 99_4' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =22
+
+        Rectangle5_41 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =15
+
+        Rectangle5_40 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =16
+
+        Rectangle5_39 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =17
+
+        Rectangle5_38 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =18
+
+    "'SIDE NAV_7' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_7'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_7'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =23
+

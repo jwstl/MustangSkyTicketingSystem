@@ -1,0 +1,67 @@
+compScreenHeader As CanvasComponent:
+    BackgroundColor: |-
+        =ColorValue("#f5f5f5")
+    BarText: ="Text"
+    Fill: =compScreenHeader.BackgroundColor
+    Forecolor: =RGBA(0, 0, 0, 1)
+    Height: =60
+    ImageToDisplay: =SampleImage
+    PaddingLeft: =90
+    PaddingRight: =100
+    ShowImage: =false
+    Width: =1366
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Label7 As label:
+        Color: =compScreenHeader.Forecolor
+        Height: =60
+        Size: =17
+        Text: =If(Len(App.ActiveScreen.Name) = 0, "Sample Screen Heading Text", App.ActiveScreen.Name)
+        Width: =Parent.Width - Self.X - compScreenHeader.PaddingRight
+        X: =icoHeading.X + icoHeading.Width
+        ZIndex: =1
+
+    icoHeading As icon.Save:
+        Color: =compScreenHeader.Forecolor
+        Height: =Parent.Height
+        Icon: =Icon.ListScrollWatchlist
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Visible: =!compScreenHeader.ShowImage
+        Width: =60
+        X: =recSeparator.X + recSeparator.Width 
+        ZIndex: =2
+
+    imgHeading As image:
+        Height: =icoHeading.Height
+        Image: =compScreenHeader.ImageToDisplay
+        Visible: =compScreenHeader.ShowImage
+        Width: =icoHeading.Width
+        X: =icoHeading.X
+        ZIndex: =3
+
+    icoBack As icon.Save:
+        Color: =compScreenHeader.Forecolor
+        Height: =Parent.Height
+        Icon: =Icon.BackArrow
+        OnSelect: =Back()
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        Width: =60
+        X: =compScreenHeader.PaddingLeft
+        ZIndex: =4
+
+    recSeparator As rectangle:
+        Fill: =compScreenHeader.Forecolor
+        Height: =Parent.Height - 16
+        Width: =3
+        X: =icoBack.X + icoBack.Width 
+        Y: =Parent.Height / 2 - Self.Height / 2
+        ZIndex: =5
+

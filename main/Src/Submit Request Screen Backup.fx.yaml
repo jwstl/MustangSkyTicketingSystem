@@ -1,0 +1,406 @@
+"'Submit Request Screen Backup' As screen":
+    Fill: =gblTheme.BodyBackground
+    OnVisible: |
+        =Set(
+            gblShowSpinner,
+            true
+        );
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+
+    Rectangle5_1 As rectangle:
+        Fill: =RGBA(109, 49, 162, 0.3)
+        Height: =577
+        Width: =626
+        X: =100
+        Y: =168
+        ZIndex: =1
+
+    "'SCREEN HEADER_24' As compScreenHeader":
+        BackgroundColor: =gblTheme.PrimaryLight
+        Fill: ='SCREEN HEADER_24'.BackgroundColor
+        Forecolor: =gblTheme.PrimaryLightFont
+        Y: =100
+        ZIndex: =2
+
+    "'APP HEADER_26' As compAppHeader":
+        ApplicationName: =gblAppGlobals.ApplicationName
+        ColorPrimaryDark: =gblTheme.PrimaryDark
+        ColorPrimaryDarkFont: =gblTheme.PrimaryLight
+        Fill: ='APP HEADER_26'.ColorPrimaryDark
+        LogoImage: =gblAppGlobals.ApplicationLogo
+        ProfileLine1: =gblCurrentUser.FullName
+        ProfileLine2: =gblCurrentUser.Email
+        ProfilePhoto: =gblCurrentUser.Photo
+        ZIndex: =3
+
+    "'SPINNER GROUP_24' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =3
+
+        recSpinner_24 As rectangle:
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =gblShowSpinner
+            Width: =1366
+            ZIndex: =11
+
+        imgSpinner_25 As image:
+            BorderColor: =White
+            BorderStyle: =BorderStyle.Dashed
+            Height: =206
+            Image: =gblTheme.Spinner
+            Visible: =gblShowSpinner
+            Width: =206
+            X: =580
+            Y: =321
+            ZIndex: =12
+
+    icoShowDebug_19 As icon.Add:
+        Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
+        Height: =45
+        Icon: =Icon.Printing3D
+        OnSelect: =Set(gblShowDebugging, !gblShowDebugging);
+        Visible: =gblIsTester
+        Width: =45
+        X: =gblAppGlobals.DebugButton_X
+        Y: =gblAppGlobals.DebugButton_Y
+        ZIndex: =4
+
+    Label1_58 As label:
+        BorderColor: =gblTheme.PrimaryDark
+        BorderStyle: =BorderStyle.Dotted
+        BorderThickness: =1
+        Color: =gblTheme.PrimaryDark
+        Fill: =LightYellow
+        Text: ="Testing..."
+        Visible: =gblShowDebugging
+        Width: =100
+        X: =gblAppGlobals.DebugButton_X - Self.Width - 10
+        Y: =gblAppGlobals.DebugButton_Y + 4
+        ZIndex: =5
+
+    "'SIDE NAV_24' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_24'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_24'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =10
+
+    "'SPACER GROUP 99_18' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =12
+
+        Rectangle5_152 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =160
+            ZIndex: =6
+
+        Rectangle5_154 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =1346
+            Y: =748
+            ZIndex: =7
+
+        Rectangle5_153 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =748
+            ZIndex: =8
+
+        Rectangle5_151 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =80
+            Y: =160
+            ZIndex: =9
+
+    btnSubmit_1 As button:
+        BorderColor: =ColorFade(Self.Fill, -40%)
+        Fill: =gblTheme.SecondaryDark
+        Height: =50
+        HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+        HoverFill: =gblTheme.SecondaryLight
+        OnSelect: |-
+            =Set(gblShowSpinner, true);
+            
+            Set(gblShowSpinner, false);
+        Size: =16
+        Text: ="Submit Request"
+        Width: =257
+        X: =436
+        Y: =678
+        ZIndex: =13
+
+    txtRequestSubject_1 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: ="Brief Description of Request"
+        Height: =45
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+        Size: =16
+        Width: =559
+        X: =123
+        Y: =220
+        ZIndex: =14
+
+    Label1_60 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        Height: =30
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Request Subject Line"
+        Width: =238
+        X: =123
+        Y: =188
+        ZIndex: =15
+
+    lblTicketPriority_1 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Ticket Priority"
+        Width: =214
+        X: =936
+        Y: =175
+        ZIndex: =16
+
+    ddlTicketPriority_1 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(RequestPriorities, IsActive),SortOrder)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =936
+        Y: =217
+        ZIndex: =17
+
+    Label1_61 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        Height: =25
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Full Request Description"
+        Width: =301
+        X: =123
+        Y: =288
+        ZIndex: =18
+
+    txtRequestDescription_1 As text:
+        BorderColor: =gblTheme.PrimaryDark
+        Color: =gblTheme.PrimaryDark
+        Default: ="Detailed Description of Request"
+        Height: =329
+        HoverBorderColor: =gblTheme.PrimaryDark
+        HoverColor: =gblTheme.PrimaryDark
+        HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+        Size: =16
+        Width: =559
+        X: =123
+        Y: =319
+        ZIndex: =19
+
+    lblTicketStatus_1 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Ticket Status"
+        Width: =214
+        X: =936
+        Y: =273
+        ZIndex: =20
+
+    ddlTicketStatus_1 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(RequestStatuses, IsActive),SortOrder)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =936
+        Y: =315
+        ZIndex: =21
+
+    lblTicketCategory_1 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Ticket Category"
+        Width: =214
+        X: =936
+        Y: =372
+        ZIndex: =22
+
+    ddlTicketCategory_1 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(RequestCategories, IsActive),SortOrder)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =936
+        Y: =414
+        ZIndex: =23
+
+    lblTicketType_1 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Ticket Type"
+        Width: =214
+        X: =936
+        Y: =470
+        ZIndex: =24
+
+    ddlTicketType_1 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(AssignmentTypes, IsActive),SortOrder)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =936
+        Y: =512
+        ZIndex: =25
+
+    lblPrivacyLevel_1 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Privacy Level"
+        Width: =214
+        X: =936
+        Y: =568
+        ZIndex: =26
+
+    ddlPrivacyLevel_1 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(ShowLevels, IsActive),SortOrder)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =936
+        Y: =610
+        ZIndex: =27
+
+    lblAssignedDepartment_1 As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Assigned Department"
+        Width: =245
+        X: =936
+        Y: =668
+        ZIndex: =28
+
+    ddlAssignedDepartment_1 As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(Departments, IsActive),SortOrder)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =936
+        Y: =708
+        ZIndex: =29
+
+    lblEditTicket_AssignmentType As label:
+        Color: =gblTheme.PrimaryDark
+        FontWeight: =FontWeight.Semibold
+        PaddingLeft: =0
+        Size: =16
+        Text: ="Assignment Type"
+        Width: =214
+        X: =557
+        Y: =279
+        ZIndex: =30
+
+    ddlAssignmentType As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(AssignmentTypes, IsActive),SortOrder)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =557
+        Y: =313
+        ZIndex: =31
+

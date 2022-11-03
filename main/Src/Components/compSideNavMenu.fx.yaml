@@ -1,0 +1,261 @@
+compSideNavMenu As CanvasComponent:
+    AutoRefreshColors: =false
+    BackgroundColor: |-
+        =ColorValue("#e5e5e5")
+    Fill: =compSideNavMenu.BackgroundColor
+    ForegroundColor: =compSideNavMenu.ForegroundColorOutput
+    ForegroundColorOutput: |-
+        =ColorValue("#666666")
+    GroupsUserIsIn: |-
+        ="User;" // Replace this string with all the named groups the current user is in, separated by a semicolon: i.e. "User;Admins;Devs;"
+    Height: =668
+    HighLightBackcolor: =LightYellow
+    HoverColor: =RGBA(0, 0, 0, 1)
+    IconsOrImages: ="Images"
+    IconsOrImagesOutput: =varIconsOrImagesOutput
+    IsExpanded: =varOpenUp
+    MenuItems: |-
+        =Table(
+            {
+                MenuLabel: "Home Screen",
+                MenuImage: SampleImage,
+                MenuIcon: Icon.Home,
+                ShowForThisRole: "User",
+                ScreenToGoTo: 'Home Screen',
+                Visible: true,
+                LaunchLink: false,
+                LaunchURL: ""
+            },
+            {
+                MenuLabel: "New Screen",
+                MenuImage: SampleImage,
+                MenuIcon: Icon.DetailList,
+                ShowForThisRole: "User",
+                ScreenToGoTo: 'NEW SCREEN',
+                Visible: true,
+                LaunchLink: false,
+                LaunchURL: ""
+            },
+            {
+                MenuLabel: "Application Administration",
+                MenuImage: SampleImage,
+                MenuIcon: Icon.Settings,
+                ShowForThisRole: "gblIsAppAdmin",
+                ScreenToGoTo: 'Application Administration Screen',
+                Visible: true,
+                LaunchLink: false,
+                LaunchURL: ""
+            },
+            {
+                MenuLabel: "Developer Screen",
+                MenuImage: SampleImage,
+                MenuIcon: Icon.Key,
+                ShowForThisRole: "gblIsAppDeveloper",
+                ScreenToGoTo: 'Developer Screen',
+                Visible: true,
+                LaunchLink: false,
+                LaunchURL: ""
+            },
+            {
+                MenuLabel: "Web Site",
+                MenuImage: SampleImage,
+                MenuIcon: Icon.Diamond,
+                ShowForThisRole: "User",
+                ScreenToGoTo: Blank(),
+                Visible: true,
+                LaunchLink: true,
+                LaunchURL: "https://powerappstutorial.com/"
+            }
+        )
+    MenuWidth: =If(varOpenUp, 80, 400)
+    OnReset: =Set(varTimerGo, true);
+    ShowDottedOutline: =true
+    ShowSideBars: =true
+    Width: =If(compSideNavMenu.IsExpanded, 550, 80)
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    galleryMenuItems As gallery.galleryVertical:
+        Fill: =compSideNavMenu.BackgroundColor
+        Height: =Parent.Height - Self.Y
+        Items: |-
+            =Filter(
+                compSideNavMenu.MenuItems,
+                Visible = true And ShowForThisRole in Split(
+                    compSideNavMenu.GroupsUserIsIn,
+                    ";"
+                )
+            )
+        Layout: =Layout.Vertical
+        OnSelect: |-
+            =Set(
+                varOpenUp,
+                false
+            );
+            If(
+                Not ThisItem.LaunchLink,
+                Navigate(
+                    ThisItem.ScreenToGoTo,
+                    ScreenTransition.Fade
+                );,
+                Launch(
+                    ThisItem.LaunchURL, 
+                    {}, 
+                    LaunchTarget.New
+                );
+            );
+        TemplatePadding: =4
+        TemplateSize: =67
+        Width: =Parent.Width
+        Y: =80
+        ZIndex: =1
+
+        Rectangle4 As rectangle:
+            Fill: =If(App.ActiveScreen = ThisItem.ScreenToGoTo, compSideNavMenu.HighLightBackcolor, RGBA(0, 0, 0, 0))
+            Height: =imgMenu.Height
+            OnSelect: =Select(Parent)
+            Tooltip: =ThisItem.MenuLabel
+            Width: =Parent.TemplateWidth - 10  //imgMenu.Width
+            X: =imgMenu.X
+            Y: =imgMenu.Y
+            ZIndex: =1
+
+        imgMenu As image:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            Height: =60
+            Image: =ThisItem.MenuImage
+            OnSelect: =Select(Parent)
+            Tooltip: =ThisItem.MenuLabel
+            Visible: =Lower(varIconsOrImagesOutput) = "images" Or Lower(compSideNavMenu.IconsOrImages) = "images"
+            Width: =60
+            X: =8
+            Y: =4
+            ZIndex: =2
+
+        recBar As rectangle:
+            Fill: |-
+                =If(IsBlankOrError(varForeColor), icoHamburger.Color, varForeColor) //If(IsBlankOrError(varForeColor), ColorValue("#666666"), varForeColor)
+            Height: =imgMenu.Height
+            OnSelect: =Select(Parent)
+            Tooltip: =ThisItem.MenuLabel
+            Width: =4
+            Y: =imgMenu.Y
+            ZIndex: =3
+
+        Label6 As label:
+            Color: =If(IsBlankOrError(varForeColor), icoHamburger.Color, varForeColor)
+            Height: =65
+            OnSelect: =Select(Parent)
+            Size: =16
+            Text: =ThisItem.MenuLabel & If(ThisItem.LaunchLink, "  ↗", "")
+            Tooltip: =ThisItem.MenuLabel
+            Width: =Parent.Width - Self.X - 8
+            X: =84
+            Y: =3
+            ZIndex: =4
+
+        icoMenu As icon.Filter:
+            AccessibleLabel: =ThisItem.MenuLabel
+            Color: =If(IsBlankOrError(varForeColor), icoHamburger.Color, varForeColor)
+            Height: =imgMenu.Height
+            Icon: =ThisItem.MenuIcon
+            OnSelect: =Select(Parent)
+            PaddingBottom: =8
+            PaddingLeft: =8
+            PaddingRight: =8
+            PaddingTop: =8
+            Tooltip: =ThisItem.MenuLabel
+            Visible: =Lower(varIconsOrImagesOutput) = "icons" Or Lower(compSideNavMenu.IconsOrImages) = "icons"
+            Width: =imgMenu.Width
+            X: =imgMenu.X
+            Y: =imgMenu.Y
+            ZIndex: =5
+
+        recDotted As rectangle:
+            BorderColor: =If(IsBlankOrError(varForeColor), icoHamburger.Color, varForeColor)
+            BorderStyle: =BorderStyle.Dotted
+            BorderThickness: =1
+            Fill: =RGBA(56, 96, 178, 0)
+            Height: =imgMenu.Height
+            OnSelect: =Select(Parent)
+            Tooltip: =ThisItem.MenuLabel
+            Visible: =App.ActiveScreen = ThisItem.ScreenToGoTo And compSideNavMenu.ShowDottedOutline
+            Width: =Parent.TemplateWidth - 10 
+            X: =imgMenu.X
+            Y: =imgMenu.Y
+            ZIndex: =6
+
+        Icon2 As icon.Add:
+            BorderColor: =Self.Fill
+            Color: =Transparent
+            Height: =Parent.TemplateHeight
+            Icon: =Icon.Add
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            ZIndex: =7
+
+    icoHamburger As icon.Cancel:
+        Color: =compSideNavMenu.ForegroundColor  //RGBA(102, 102, 102, 1)
+        Height: =80
+        Icon: =Icon.Hamburger
+        OnSelect: =Set(varOpenUp, !(varOpenUp = true))
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        Width: =80
+        ZIndex: =2
+
+    Timer1 As timer:
+        AutoStart: =true
+        Duration: =1
+        Height: =42
+        OnTimerEnd: =Set(varForeColor, icoHamburger.Color);Set(varIconsOrImagesOutput, lblIconsOrImages.Text);Set(varTimerGo, false);
+        OnTimerStart: =Set(varForeColor, icoHamburger.Color);Set(varIconsOrImagesOutput, lblIconsOrImages.Text);
+        Repeat: =varTimerGo
+        Visible: =false
+        Width: =80
+        Y: =568
+        ZIndex: =3
+
+    Label9 As label:
+        Text: =Lower(compSideNavMenu.IconsOrImages) 
+        Visible: =false
+        Width: =80
+        Y: =628
+        ZIndex: =4
+
+    Label10 As label:
+        Text: =Lower(compSideNavMenu.IconsOrImages) = "images"
+        Visible: =false
+        Width: =80
+        Y: =570
+        ZIndex: =5
+
+    Label11 As label:
+        Text: =Lower(compSideNavMenu.IconsOrImages)
+        Visible: =false
+        Y: =454
+        ZIndex: =6
+
+    Label12 As label:
+        Text: ="Text"
+        Visible: =false
+        Y: =494
+        ZIndex: =7
+
+    Rectangle3 As rectangle:
+        Fill: |-
+            =ColorValue("#aaaaaa")
+        Height: =Parent.Height
+        Width: =1
+        X: =Parent.Width - 1
+        ZIndex: =8
+
+    lblIconsOrImages As label:
+        Text: =compSideNavMenu.IconsOrImages
+        Visible: =false
+        Y: =484
+        ZIndex: =9
+

@@ -1,0 +1,710 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |
+        =// ===========================================================================================
+        /*
+            Developer: Jason White (hello@mustangsky.com)
+            This app is meant to be a starting point in developing a new PowerApps app 
+            License: 
+            ==========================================================================================
+                GLOBAL VARIABLES (listed in alphabetical order) - collections listed separately
+            ==========================================================================================
+            gblAppGlobals                   Record value - Groups values specific to this application. 
+            gblApplicationLink              String value - This is a string value which will hold 
+                                            the link back to the application. This is helpful if 
+                                            you're sending out links in emails to get back to the app. 
+                                            The app's link changes any time you do a save as
+                                            since you are creating a whole new app. 
+            gblCurrentUser                  Record value - Groups values specific to this user. It is 
+                                            good to store them here over going to the User() function 
+                                            in case you need to impersonate another user (great for 
+                                            troubleshooting problems).      
+            gblDebugValuesShowByDefault     Boolean value - to determine if the "show debug" info 
+                                            is on by default.
+            gblDemoMode                     Boolean value - This is useful if you're using the app and 
+                                            need a boolean flag to hide/show things based on if 
+                                            you're just demo'ing the app. 
+            gblFavorHiddenNavBar            Boolean value - Boolean value to hide the nav bar when 
+                                            sending out links in emails. 
+            gblIsAppAdmin                   Boolean value - Indicates if the current user is an
+                                            application admin 
+                                            (are they listed in gblAppGlobals.AdminEmails)
+            gblIsAppDeveloper               Boolean value - Indicates if the current user is a 
+                                            developer (are they listed in gblOriginalDeveloper
+                                            ...or in gblAppGlobals.DeveloperEmails - one feeds
+                                            into the other)
+            gblIsTester                     Boolean value - Indicates if the current user is a 
+                                            tester (are they listed in gblAppGlobals.TesterEmails)
+            gblMenuSettings                 Table value - settings for the menu component which 
+                                            are grouped together
+            gblNewColorPalette              From the 'Copy Controls From Here' screen, there is 
+                                            a button there with the text 'Create New Color Palette'
+                                            which makes use of this variable which is used 
+                                            temporarily and then assigned to gblTheme.
+            gblOriginalDeveloper            Boolean value - Put in your email address here, or append 
+                                            yours, separated by a comma. This has many uses. 
+                                            We can check against this against User().Email to know if 
+                                            you're the dev when you're using the app as a user.   
+            gblSessionText                  String value - holds a date/time stamp so that will be
+                                            used with the ScreenUse table data source.
+            gblShowDebugging                Boolean value - determines if the debugging icon
+                                            appears on each page. 
+            gblShowSpinner                  Boolean value - Shows/hides the spinner. Set to true to 
+                                            show, and false to hide. Do this each time you'll do any 
+                                            processing that will take some time.      
+            gblSpinnerGraphic               This is a variable which will reference the graphic
+                                            that should be used for the spinner for the current 
+                                            theme
+            gblTheme                        Record value - Groups values used for the look and feel 
+                                            for the app. 
+            gblUserRoles                    String value - The variable we pass into the menu to tell 
+                                            it what are all the roles this user is a part of so it 
+                                            knows which menu items to show or hide based on that.
+            ===========================================================================================
+                COLLECTION VARIABLES
+            ===========================================================================================
+            colThemes                A collection of themes if you want to change the 
+                                            theme dynamically. 
+            colNavItems              A collection that defines the navigational items for 
+                                            the menu.     
+        */
+        // ===========================================================================================
+        // Here are initial default values to set now: 
+        Set(
+            gblOriginalDeveloper,
+            Lower("hello@mustangsky.com")// Put in your email address here
+        );
+        // Put your email address inside these double quotes
+        Set(
+            gblDebugValuesShowByDefault,
+            false
+        );
+        Set(
+            gblDemoMode,
+            false
+        );
+        Set(
+            gblFavorHiddenNavBar,
+            true
+        );
+        Set(
+            gblApplicationLink,
+            "https://apps.powerapps.com/play/(______APPLICATION_KEY_HERE___________)"
+        );
+        // Set this to what you prefer
+        // ===========================================================================================
+        Set(
+            gblShowSpinner,
+            true
+        );
+        If(
+            gblFavorHiddenNavBar,
+            Set(
+                gblApplicationLink,
+                gblApplicationLink & "&hidenavbar=true"
+            );
+            
+        );
+        Set(
+            gblAppGlobals,
+            {
+                ApplicationName: "Mustang Sky Ticketing System",
+                ApplicationStringKey: "NEESEUS-APPTEMPLATE",
+                ApplicationLogo: Logo,
+                // graPATutorialLogo,
+        ThemeKey: "POWERAPPS-PURPLE",
+                // Reference the image you wish to be displayed in the application header bar
+                AppVersion: "2022.10.10",
+                // Each time you publish your applicaiton, update this string to reflect the new version number
+                DeveloperEmails: ";" & gblOriginalDeveloper,
+                // Add in the developer email addresses here
+                AdminEmails: ";" & gblOriginalDeveloper,
+                // Add in the email addresses of your application admins (who should have elevated access) here
+                TesterEmails: ";" & gblOriginalDeveloper,
+                // Others you would like to see debugging info for testing and troubleshooting purposes
+                ApplicationLink: gblApplicationLink,
+                // Go to the share screen to get the link to paste here
+                DebugButton_X: 1003,
+                DebugButton_Y: 8,
+                DefaultFontName: "Open Sans",
+                DefaultDataEntryHeight: 30
+            }
+        );
+        If(
+            gblDemoMode,
+            Set(
+                gblCurrentUser,
+                {
+                    FullName: "Jason White",
+                    Email: "hello@mustangsky.com",
+                    Photo: imgFemaleProfilePhoto.Image
+                }
+            );
+            ,
+            Set(
+                gblCurrentUser,
+                {
+                    FullName: User().FullName,
+                    Email: Lower(User().Email),
+                    Photo: User().Image
+                }
+            );
+            
+        );
+        // ===========================================================================================
+        // Setting the Current User Values
+        // ===========================================================================================
+        If(
+            CountRows(
+                Filter(
+                    Users,
+                    Email = User().Email
+                )
+            ) = 0,
+            Set(
+                varCurrentUserData,
+                Patch(
+                    Users,
+                    Defaults(Users),
+                    {
+                        Title: User().FullName,
+                        FirstName: First(
+                            Split(
+                                User().FullName,
+                                " "
+                            )
+                        ).Result,
+                        LastName: Last(
+                            Split(
+                                User().FullName,
+                                " "
+                            )
+                        ).Result,
+                        Email: User().Email,
+                        Photo: Substitute(
+                            JSON(
+                                User().Image,
+                                JSONFormat.IncludeBinaryData
+                            ),
+                            """",
+                            ""
+                        ),
+                        PhotoLength: Len(
+                            Substitute(
+                                JSON(
+                                    User().Image,
+                                    JSONFormat.IncludeBinaryData
+                                ),
+                                """",
+                                ""
+                            )
+                        )
+                    }
+                )
+            )
+        );
+        // ===========================================================================================
+        // gblUserRoles is the variable we pass into the menu to tell it
+        // what are all the roles this user is a part of so it knows
+        // which menu items to show or hide based on that.
+        // ===========================================================================================
+        Set(
+            gblUserRoles,
+            "User;"
+        );
+        Set(
+            gblIsAppDeveloper,
+            !IsBlank(
+                Find(
+                    Lower(User().Email),
+                    gblAppGlobals.DeveloperEmails
+                )
+            )
+        );
+        If(
+            gblIsAppDeveloper,
+            Set(
+                gblUserRoles,
+                gblUserRoles & "gblIsAppDeveloper;"
+            );
+            
+        );
+        Set(
+            gblIsAppAdmin,
+            !IsBlank(
+                Find(
+                    Lower(User().Email),
+                    gblAppGlobals.AdminEmails
+                )
+            )
+        );
+        If(
+            gblIsAppAdmin,
+            Set(
+                gblUserRoles,
+                gblUserRoles & "gblIsAppAdmin;"
+            );
+            
+        );
+        Set(
+            gblIsTester,
+            !IsBlank(
+                Find(
+                    Lower(User().Email),
+                    Lower(gblAppGlobals.TesterEmails)
+                )
+            )
+        );
+        If(
+            gblIsTester,
+            Set(
+                gblUserRoles,
+                gblUserRoles & "gblIsTester;"
+            );
+            
+        );
+        Set(
+            gblShowDebugging,
+            gblDebugValuesShowByDefault
+        );
+        ClearCollect(
+            colThemes,
+            Table(
+                {
+                    Title: "POWERAPPS-PURPLE",
+                    Name: "PowerApps Purple",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#572B57"),
+                    PrimaryDark: ColorValue("#572B57"),
+                    PrimaryDarkFont: ColorValue("#EAEEF2"),
+                    PrimaryLight: ColorValue("#e5e5e5"),
+                    PrimaryLightFont: ColorValue("#572B57"),
+                    SecondaryDark: ColorValue("#732773"),
+                    SecondaryDarkFont: ColorValue("#EAEEF2"),
+                    SecondaryLight: ColorValue("#62E61C"),
+                    SecondaryLightFont: ColorValue("#572B57"),
+                    BodyBackground: ColorValue("#ffffff"),
+                    BodyBackgroundFont: ColorValue("#572B57"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#732773"),
+                        70%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#732773"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Purple'
+                },
+                {
+                    Title: "DASHBOARD-THEME",
+                    Name: "Dashboard Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#1f2b3a"),
+                    PrimaryDark: ColorValue("#1f2b3a"),
+                    PrimaryDarkFont: ColorValue("#EAEEF2"),
+                    PrimaryLight: ColorValue("#56aab3"),
+                    PrimaryLightFont: ColorValue("#000000"),
+                    SecondaryDark: ColorValue("#d75b56 "),
+                    SecondaryDarkFont: ColorValue("#EAEEF2"),
+                    SecondaryLight: ColorValue("#ebaf58"),
+                    SecondaryLightFont: ColorValue("#000000"),
+                    BodyBackground: ColorValue("#dfdfdf"),
+                    BodyBackgroundFont: ColorValue("#000000"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#ebaf58"),
+                        70%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#732773"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Dashboard'
+                },
+                {
+                    Title: "ORANGE-BLUE-THEME",
+                    Name: "Orange & Blue Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#444444"),
+                    PrimaryDark: ColorValue("#444444"),
+                    PrimaryDarkFont: ColorValue("#EAEEF2"),
+                    PrimaryLight: ColorValue("#ffad01"),
+                    PrimaryLightFont: ColorValue("#444444"),
+                    SecondaryDark: ColorValue("#003354"),
+                    SecondaryDarkFont: ColorValue("#EAEEF2"),
+                    SecondaryLight: ColorValue("#91bed4"),
+                    SecondaryLightFont: ColorValue("#003354"),
+                    BodyBackground: ColorValue("#d9e8f5"),
+                    BodyBackgroundFont: ColorValue("#1A2C3F"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#ffad01"),
+                        40%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#ffad01"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Orange-Blue'
+                },
+                {
+                    Title: "BLUE-THEME",
+                    Name: "Blue Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#1A2C3F"),
+                    PrimaryDark: ColorValue("#1A2C3F"),
+                    PrimaryDarkFont: ColorValue("#EAEEF2"),
+                    PrimaryLight: ColorValue("#D2D7E1"),
+                    PrimaryLightFont: ColorValue("#1A2C3F"),
+                    SecondaryDark: ColorValue("#33557C"),
+                    SecondaryDarkFont: ColorValue("#EAEEF2"),
+                    SecondaryLight: ColorValue("#668796"),
+                    SecondaryLightFont: ColorValue("#EAEEF2"),
+                    BodyBackground: ColorValue("#EAEEF2"),
+                    BodyBackgroundFont: ColorValue("#1A2C3F"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#D2D7E1"),
+                        40%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#D2D7E1"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Blue'
+                },
+                {
+                    Title: "GREEN-THEME",
+                    Name: "Green Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#214C2C"),
+                    PrimaryDark: ColorValue("#001900"),
+                    PrimaryDarkFont: ColorValue("#CCC28E"),
+                    PrimaryLight: ColorValue("#CCC28E"),
+                    PrimaryLightFont: ColorValue("#001900"),
+                    SecondaryDark: ColorValue("#214C2C"),
+                    SecondaryDarkFont: ColorValue("#CCC28E"),
+                    SecondaryLight: ColorValue("#70995C"),
+                    SecondaryLightFont: ColorValue("#FFF7CD"),
+                    BodyBackground: ColorValue("#FFF7CD"),
+                    BodyBackgroundFont: ColorValue("#214C2C"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#CCC28E"),
+                        40%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#CCC28E"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Green'
+                },
+                {
+                    Title: "RED-THEME",
+                    Name: "Red Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#770B0C"),
+                    PrimaryDark: ColorValue("#770B0C"),
+                    PrimaryDarkFont: ColorValue("#ECEDEE"),
+                    PrimaryLight: ColorValue("#dadada"),
+                    PrimaryLightFont: ColorValue("#770B0C"),
+                    SecondaryDark: ColorValue("#D40D12"),
+                    SecondaryDarkFont: ColorValue("#ECEDEE"),
+                    SecondaryLight: ColorValue("#FFE3E3"),
+                    SecondaryLightFont: ColorValue("#770B0C"),
+                    BodyBackground: ColorValue("#fafafa"),
+                    BodyBackgroundFont: ColorValue("#000000"),
+                    GallerySelectedBG: LightYellow,
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#989898"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Red'
+                },
+                {
+                    Title: "EARTH-THEME",
+                    Name: "Earth Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#9A8D54"),
+                    PrimaryDark: ColorValue("#9A8D54"),
+                    PrimaryDarkFont: ColorValue("#FAF4E8"),
+                    PrimaryLight: ColorValue("#B7E4F8"),
+                    PrimaryLightFont: ColorValue("#9A8D54"),
+                    SecondaryDark: ColorValue("#CBC6AE"),
+                    SecondaryDarkFont: ColorValue("#000000"),
+                    SecondaryLight: ColorValue("#ACCCCA"),
+                    SecondaryLightFont: ColorValue("#9A8D54"),
+                    BodyBackground: ColorValue("#FAFAE8"),
+                    BodyBackgroundFont: ColorValue("#9A8D54"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#B7E4F8"),
+                        40%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#B7E4F8"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Earth'
+                },
+                {
+                    Title: "POND-THEME",
+                    Name: "Pond Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#7C9C60"),
+                    PrimaryDark: ColorValue("#7C9C60"),
+                    PrimaryDarkFont: ColorValue("#E7F4EF"),
+                    PrimaryLight: ColorValue("#9FD7C4"),
+                    PrimaryLightFont: ColorValue("#7C9C60"),
+                    SecondaryDark: ColorValue("#569085"),
+                    SecondaryDarkFont: ColorValue("#000000"),
+                    SecondaryLight: ColorValue("#B8D296"),
+                    SecondaryLightFont: ColorValue("#000000"),
+                    BodyBackground: ColorValue("#E7F4EF"),
+                    BodyBackgroundFont: ColorValue("#7C9C60"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#9FD7C4"),
+                        40%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#9FD7C4"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Pond'
+                },
+                {
+                    Title: "LIGHT-THEME",
+                    Name: "Light Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#50A9BD"),
+                    PrimaryDark: ColorValue("#50A9BD"),
+                    PrimaryDarkFont: ColorValue("#F0F9FE"),
+                    PrimaryLight: ColorValue("#D4EAF5"),
+                    PrimaryLightFont: ColorValue("#50A9BD"),
+                    SecondaryDark: ColorValue("#9DCDDF"),
+                    SecondaryDarkFont: ColorValue("#000000"),
+                    SecondaryLight: ColorValue("#D6D7D4"),
+                    SecondaryLightFont: ColorValue("#000000"),
+                    BodyBackground: ColorValue("#F0F9FE"),
+                    BodyBackgroundFont: ColorValue("#50A9BD"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#D4EAF5"),
+                        40%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#D4EAF5"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Light'
+                },
+                {
+                    Title: "OFFICE-THEME",
+                    Name: "Office Theme",
+                    MenuBackcolor: ColorValue("#FFFFFF"),
+                    MenuForecolor: ColorValue("#464f4f"),
+                    PrimaryDark: ColorValue("#464f4f"),
+                    PrimaryDarkFont: ColorValue("#EDF1F5"),
+                    PrimaryLight: ColorValue("#C3D5DA"),
+                    PrimaryLightFont: ColorValue("#464F4F"),
+                    SecondaryDark: ColorValue("#B59A6C"),
+                    SecondaryDarkFont: ColorValue("#EDF1F5"),
+                    SecondaryLight: ColorValue("#789AB5"),
+                    SecondaryLightFont: ColorValue("#EDF1F5"),
+                    BodyBackground: ColorValue("#EDF1F5"),
+                    BodyBackgroundFont: ColorValue("#464F4F"),
+                    GallerySelectedBG: ColorFade(
+                        ColorValue("#C3D5DA"),
+                        40%
+                    ),
+                    ControlHoverColor: ColorFade(
+                        ColorValue("#C3D5DA"),
+                        70%
+                    ),
+                    Spinner: 'Graphics-Spinner-Office'
+                }
+            )
+        );
+        Set(
+            gblTheme,
+            LookUp(
+                colThemes,
+                Title = gblAppGlobals.ThemeKey
+            )
+        );
+        Set(
+            varGlobalMenuSettings,
+            {
+                Forecolor: gblTheme.PrimaryDark,
+                Backcolor: gblTheme.MenuBackcolor,
+                IconsOrImages: "Icons",
+                ShowDottedOutline: true
+            }
+        );
+        ClearCollect(
+            colNavItems,
+            Table(
+                {
+                    MenuLabel: "Home Screen",
+                    MenuImage: SampleImage,
+                    MenuIcon: Icon.Home,
+                    ShowForThisRole: "User",
+                    ScreenToGoTo: 'Home Screen',
+                    Visible: true,
+                    LaunchLink: false,
+                    LaunchURL: ""
+                },
+                {
+                    MenuLabel: "New Screen",
+                    MenuImage: SampleImage,
+                    MenuIcon: Icon.DetailList,
+                    ShowForThisRole: "User",
+                    ScreenToGoTo: 'NEW SCREEN',
+                    Visible: true,
+                    LaunchLink: false,
+                    LaunchURL: ""
+                },
+                {
+                    MenuLabel: "Application Administration",
+                    MenuImage: SampleImage,
+                    MenuIcon: Icon.Settings,
+                    ShowForThisRole: "gblIsAppAdmin",
+                    ScreenToGoTo: 'Application Administration Screen',
+                    Visible: true,
+                    LaunchLink: false,
+                    LaunchURL: ""
+                },
+                {
+                    MenuLabel: "Developer Screen",
+                    MenuImage: SampleImage,
+                    MenuIcon: Icon.Key,
+                    ShowForThisRole: "gblIsAppDeveloper",
+                    ScreenToGoTo: 'Developer Screen',
+                    Visible: true,
+                    LaunchLink: false,
+                    LaunchURL: ""
+                },
+                {
+                    MenuLabel: "Manage Users",
+                    MenuImage: SampleImage,
+                    MenuIcon: Icon.People,
+                    ShowForThisRole: "gblIsAppDeveloper",
+                    ScreenToGoTo: 'Manage Users Screen',
+                    Visible: true,
+                    LaunchLink: false,
+                    LaunchURL: ""
+                },
+                {
+                    MenuLabel: "Web Site",
+                    MenuImage: SampleImage,
+                    MenuIcon: Icon.Diamond,
+                    ShowForThisRole: "User",
+                    ScreenToGoTo: Blank(),
+                    Visible: true,
+                    LaunchLink: true,
+                    LaunchURL: "https://mustangsky.com/"
+                }
+            )
+        );
+        Set(
+            gblSessionText,
+            Text(
+                Now(),
+                "mm/dd/yyyy hh:mm:ss.fff AM/PM"
+            )
+        );
+        /*ClearCollect(
+            ScreenUse,
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );*/
+        
+        Patch(
+            'Screen Use',
+            Defaults('Screen Use'),
+            {
+                ApplicationName: gblAppGlobals.ApplicationName,
+                Title: App.ActiveScreen.Name & " - " & Now(),
+                ScreenName: App.ActiveScreen.Name,
+                AppVersion: gblAppGlobals.AppVersion,
+                UserEmail: Lower(User().Email),
+                Info: "Collection Initialized - in App.OnStart!",
+                SessionString: gblSessionText
+            }
+        );
+        ClearCollect(
+            colDropDownListNames,
+            {
+                Title: "Request Priorities",
+                SortOrder: 1,
+                ScreenToGoTo: 'Edit Request Priorities Screen'
+            },
+            {
+                Title: "Request Statuses",
+                SortOrder: 2,
+                ScreenToGoTo: 'Edit Request Statuses Screen'
+            },
+            {
+                Title: "Request Categories",
+                SortOrder: 3,
+                ScreenToGoTo: 'Edit Request Categories Screen'
+            },
+            {
+                Title: "Assignment Types",
+                SortOrder: 4,
+                ScreenToGoTo: 'Edit Assignment Types Screen'
+            },
+            {
+                Title: "Show Levels",
+                SortOrder: 5,
+                ScreenToGoTo: 'Edit Show Levels Screen'
+            },
+            {
+                Title: "Departments",
+                SortOrder: 6,
+                ScreenToGoTo: 'Edit Departments Screen'
+            }
+        );
+        ClearCollect(
+            colEditTicketTabs,
+            Table(
+                {
+                    TabText: "Ticket Info",
+                    ShowForThisRole: "User"
+                },
+                {
+                    TabText: "Images",
+                    ShowForThisRole: "User"
+                },
+                {
+                    TabText: "Office Use",
+                    ShowForThisRole: "gblIsAppAdmin"
+                },
+                {
+                    TabText: "Assignments",
+                    ShowForThisRole: "gblIsAppAdmin"
+                },
+                {
+                    TabText: "Notes",
+                    ShowForThisRole: "User"
+                }
+            )
+        );
+        Set(
+            gblShowSpinner,
+            false
+        );
+    StartScreen: |
+        =// ===================================================================================
+        // The following code is an example of how to implement "deep linking"
+        //      -Replace "QUERY_STRING_PARAMETER" with the parameter of your chioce
+        //      -Replace the string on the right side with what you want to match it with
+        //      -Pass the screen into the navigate function
+        // ===================================================================================
+        If(
+            Param("QUERY_STRING_PARAMETER") = "QUERY_STRING_PARAMETER",
+            'Home Screen',
+            'Home Screen'
+        )
+
