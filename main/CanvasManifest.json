@@ -27,7 +27,7 @@
       "dynamicschema": false,
       "enableappembeddingux": false,
       "enablebarcodereaderfeature": false,
-      "enablecommandbar": true,
+      "enablecommandbar": false,
       "enablecomponentnamemaps": true,
       "enablecomponentscopeoldbehavior": true,
       "enableeditcacherefreshfrequency": false,

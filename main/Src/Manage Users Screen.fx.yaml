@@ -107,7 +107,7 @@
             Height: =Parent.TemplateHeight
             OnSelect: =Select(Parent)
             PaddingLeft: =15
-            Text: =ThisItem.Title
+            Text: =ThisItem.Title //&  "-" & ThisItem.DepartmentID & "."
             Width: =lblColumnHeading1_1.Width
             X: =lblColumnHeading1_1.X - Parent.X
             ZIndex: =1
@@ -157,7 +157,8 @@
                     Title: txtManageUsers_FirstName.Text & " " & txtManageUsers_LastName.Text,
                     FirstName: txtManageUsers_FirstName.Text,
                     LastName: txtManageUsers_LastName.Text,
-                    Notes: txtManageUsers_Notes.Text
+                    Notes: txtManageUsers_Notes.Text,
+                    DepartmentID: ddlManageUsers_Department.Selected.ID
                 }
             );
             
@@ -212,14 +213,14 @@
             ="Notes:"
         Width: =500
         X: =811
-        Y: =359
+        Y: =443
         ZIndex: =12
 
     txtManageUsers_Notes As text:
         BorderColor: =gblTheme.PrimaryDark
         Color: =gblTheme.PrimaryDark
         Default: =galManageUsers.Selected.Notes
-        Height: =267
+        Height: =160
         HoverBorderColor: =gblTheme.PrimaryDark
         HoverColor: =gblTheme.PrimaryDark
         HoverFill: =gblTheme.PrimaryLight
@@ -227,7 +228,7 @@
         PaddingTop: =10
         Width: =500
         X: =811
-        Y: =389
+        Y: =473
         ZIndex: =13
 
     Label1_31 As label:
@@ -340,4 +341,32 @@
         Width: =If('SIDE NAV_25'.IsExpanded, 450, 80)
         Y: =100
         ZIndex: =23
+
+    ddlManageUsers_Department As dropdown:
+        AllowEmptySelection: =true
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        Default: =LookUp(Departments, ID = galManageUsers.Selected.DepartmentID,Title)
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Sort(Filter(Departments, IsActive),Ascending)
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        X: =811
+        Y: =396
+        ZIndex: =26
+
+    lblManageUsersLastName_1 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =30
+        PaddingLeft: =0
+        Text: |-
+            ="Department:"
+        Width: =500
+        X: =811
+        Y: =361
+        ZIndex: =27
 

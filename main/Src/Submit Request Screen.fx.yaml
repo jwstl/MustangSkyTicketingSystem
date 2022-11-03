@@ -1247,8 +1247,16 @@
             Items: |-
                 =Sort(
                     Filter(
-                        RequestNotes,
-                        RequestID = locRecord.ID
+                        Filter(
+                            RequestNotes,
+                            RequestID = locRecord.ID
+                        ),
+                        // view note based on department
+                        (Value(lblEditTicket_UserDeptID.Text) = locRecord.AssociatedDeptID And ShowLevelID = 2) 
+                        //view note created by user
+                        Or ('Created By'.Email = User().Email And ShowLevelID = 3) 
+                        // view all notes
+                        Or ShowLevelID = 1
                     ),
                     Modified,
                     Descending
@@ -1344,6 +1352,12 @@
         Width: =If('SIDE NAV_23'.IsExpanded, 450, 80)
         Y: =100
         ZIndex: =33
+
+    lblEditTicket_UserDeptID As label:
+        Text: =LookUp(Users,Email = User().Email,DepartmentID)
+        X: =558
+        Y: =110
+        ZIndex: =34
 
     grpNotes As group:
         Height: =5
@@ -1471,4 +1485,10 @@
             X: =250
             Y: =514
             ZIndex: =30
+
+    lblEditTicket_AssociatedDeptID As label:
+        Text: =locRecord.AssociatedDeptID
+        X: =737
+        Y: =110
+        ZIndex: =35
 
