@@ -1266,7 +1266,7 @@
             TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
             TemplatePadding: =2
             TemplateSize: =50
-            Width: =698
+            Width: =1203
             X: =24
             Y: =55
             ZIndex: =1
@@ -1310,7 +1310,7 @@
             PaddingLeft: =15
             Size: =15
             Text: ="NOTE"
-            Width: =350
+            Width: =700
             X: =24
             Y: =Rectangle2_2.Y
             ZIndex: =3
@@ -1323,8 +1323,8 @@
             Size: =15
             Text: ="PRIORITY LEVEL"
             Width: =200
-            X: =514
-            Y: =Rectangle2_2.Y
+            X: =1024
+            Y: =18
             ZIndex: =4
 
     btnAddNote As button:
@@ -1491,4 +1491,31 @@
         X: =737
         Y: =110
         ZIndex: =35
+
+    Rectangle5_168 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =100
+        Y: =230
+        ZIndex: =36
+
+    Rectangle5_169 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =1326
+        Y: =641
+        ZIndex: =37
+
+    Rectangle5_170 As rectangle:
+        Fill: =gblTheme.SecondaryDark
+        Height: =20
+        Visible: =gblShowDebugging
+        Width: =20
+        X: =100
+        Y: =641
+        ZIndex: =38
 
