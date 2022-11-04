@@ -1402,7 +1402,7 @@
             BorderThickness: =2
             Default: |+
                 =  If(
-                    IsBlank(locRecord),
+                    Value(locRecord.RequestStatusID) = 0 Or IsBlank(locRecord),
                     {},
                     //LookUp(RequestPriorities, IsActive And Title = "Medium"),
                     //LookUp(RequestPriorities, ID = locRecord.PriorityID)
