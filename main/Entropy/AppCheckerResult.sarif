@@ -651,6 +651,240 @@
             {
               "logicalLocations": [
                 {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.Default"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.Default",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 1,
+                  "charOffset": 158,
+                  "snippet": {
+                    "text": ")"
+                  }
+                }
+              },
+              "properties": {
+                "member": "Default",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "High"
+          },
+          "ruleId": "app-ErrBadToken",
+          "ruleIndex": 4
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.Default"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.Default",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 62,
+                  "snippet": {
+                    "text": "IsActive"
+                  }
+                }
+              },
+              "properties": {
+                "member": "Default",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "IsActive"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint-OpNotSupportedByColumn",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.Default"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.Default",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 3,
+                  "charOffset": 71,
+                  "snippet": {
+                    "text": "And"
+                  }
+                }
+              },
+              "properties": {
+                "member": "Default",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "LookUp"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.Default"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.Default",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 1,
+                  "charOffset": 158,
+                  "snippet": {
+                    "text": ")"
+                  }
+                }
+              },
+              "properties": {
+                "member": "Default",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "High"
+          },
+          "ruleId": "app-ErrBadToken",
+          "ruleIndex": 4
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.Default"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.Default",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 8,
+                  "charOffset": 62,
+                  "snippet": {
+                    "text": "IsActive"
+                  }
+                }
+              },
+              "properties": {
+                "member": "Default",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "IsActive"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint-OpNotSupportedByColumn",
+          "ruleIndex": 1
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.Default"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.Default",
+                  "relativeAddress": 0
+                },
+                "region": {
+                  "charLength": 3,
+                  "charOffset": 71,
+                  "snippet": {
+                    "text": "And"
+                  }
+                }
+              },
+              "properties": {
+                "member": "Default",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory"
+              }
+            }
+          ],
+          "message": {
+            "arguments": [
+              "LookUp"
+            ],
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "app-SuggestRemoteExecutionHint",
+          "ruleIndex": 2
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
                   "fullyQualifiedName": "compSideNavMenu.icoHamburger.AccessibleLabel"
                 }
               ],
@@ -8344,6 +8578,156 @@
                 "member": "TabIndex",
                 "module": "Screen Use Screen",
                 "type": "'Screen Use Screen'.imgSpinner_13"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
+          "ruleIndex": 6
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.TextInput1_4.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.TextInput1_4.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.TextInput1_4"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 5
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 5
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.TabIndex"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus.TabIndex",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "TabIndex",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketStatus"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
+          "ruleIndex": 6
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 5
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.TabIndex"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory.TabIndex",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "TabIndex",
+                "module": "Submit Request Screen",
+                "type": "'Submit Request Screen'.cntOfficeUse.galEditTicket_TicketCategory"
               }
             }
           ],

@@ -1210,27 +1210,6 @@
             Y: =320
             ZIndex: =12
 
-    Label4 As label:
-        Text: =locRecord.ID
-        X: =80
-        Y: =728
-        ZIndex: =18
-
-    Label3 As label:
-        BorderThickness: =2
-        Text: =locRecord.Subject
-        X: =154
-        Y: =728
-        ZIndex: =19
-
-    Label5 As label:
-        BorderThickness: =2
-        Text: =locRecord.Body
-        Width: =378
-        X: =330
-        Y: =728
-        ZIndex: =20
-
     cntNotes As groupContainer.manualLayoutContainer:
         Height: =457
         Visible: = galTabs_1.Selected.TabText = "Notes"
@@ -1531,4 +1510,142 @@
         X: =100
         Y: =641
         ZIndex: =38
+
+    cntOfficeUse As groupContainer.manualLayoutContainer:
+        Height: =435
+        Visible: =galTabs_1.Selected.TabText = "Office Use"
+        Width: =1245
+        X: =100
+        Y: =226
+        ZIndex: =39
+
+        galEditTicket_TicketStatus As gallery.galleryVertical:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Default: |-
+                =  If(
+                    IsBlank(locRecord),
+                    LookUp(RequestPriorities, IsActive And Title = "Medium"),
+                    LookUp(RequestPriorities, ID = locRecord.PriorityID)
+                )
+                
+                )
+            Fill: =RGBA(230, 230, 230, 1)
+            Height: =368
+            Items: =Sort(Filter(RequestStatuses, IsActive),SortOrder)
+            Layout: =Layout.Vertical
+            OnSelect: =
+            TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+            TemplatePadding: =2
+            TemplateSize: =50
+            Width: =328
+            X: =16
+            Y: =46
+            ZIndex: =6
+
+            Label2_43 As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                PaddingLeft: =15
+                Text: =ThisItem.Title
+                Width: =Parent.TemplateWidth
+                ZIndex: =1
+
+        lblSubmitScreen_TicketStatus_1 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: ="Ticket Status"
+            X: =16
+            Y: =16
+            ZIndex: =7
+
+        galEditTicket_TicketCategory As gallery.galleryVertical:
+            BorderColor: =gblTheme.PrimaryDark
+            BorderThickness: =2
+            Default: |-
+                =  If(
+                    IsBlank(locRecord),
+                    LookUp(RequestPriorities, IsActive And Title = "Medium"),
+                    LookUp(RequestPriorities, ID = locRecord.PriorityID)
+                )
+                
+                )
+            Fill: =RGBA(230, 230, 230, 1)
+            Height: =290
+            Items: =Sort(Filter(RequestCategories, IsActive),SortOrder)
+            Layout: =Layout.Vertical
+            OnSelect: =
+            TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
+            TemplatePadding: =2
+            TemplateSize: =50
+            Width: =862
+            WrapCount: =2
+            X: =364
+            Y: =124
+            ZIndex: =8
+
+            Label2_44 As label:
+                Height: =50
+                OnSelect: =Select(Parent)
+                PaddingLeft: =15
+                Text: =ThisItem.Title
+                Width: =Parent.TemplateWidth
+                ZIndex: =1
+
+        lblSubmitScreen_TicketCategory_1 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: ="Ticket Category"
+            Width: =394
+            X: =364
+            Y: =94
+            ZIndex: =9
+
+        Rectangle5_171 As rectangle:
+            Fill: =gblTheme.SecondaryDark
+            Height: =20
+            Visible: =gblShowDebugging
+            Width: =20
+            X: =344
+            Y: =205
+            ZIndex: =10
+
+        Label1_68 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: ="Manually Specify New Category"
+            Width: =304
+            X: =364
+            Y: =16
+            ZIndex: =11
+
+        TextInput1_4 As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: =
+            HintText: ="Specify New Category"
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+            Width: =579
+            X: =364
+            Y: =46
+            ZIndex: =12
+
+        Button5_9 As button:
+            BorderColor: =ColorFade(Self.Fill, -40%)
+            Color: =gblTheme.PrimaryDark
+            Fill: =gblTheme.SecondaryLight
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.SecondaryDark
+            OnSelect: |-
+                =Set(gblShowSpinner, true);
+                
+                Set(gblShowSpinner, false);
+            PressedBorderColor: =gblTheme.PrimaryDark
+            Text: ="Add This New Category"
+            Width: =251
+            X: =975
+            Y: =46
+            ZIndex: =13
 
