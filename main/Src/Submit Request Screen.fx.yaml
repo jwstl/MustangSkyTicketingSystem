@@ -1435,11 +1435,8 @@
             Items: |-
                 =Sort(
                     Filter(
-                        Filter(
-                            RequestCategories,
-                            DepartmentID = galEditTicket_Departments.Selected.ID
-                        ),
-                        IsActive
+                        RequestCategories,
+                        DepartmentID = galEditTicket_Departments.Selected.ID And IsActive
                     ),
                     Title
                 )
