@@ -1619,7 +1619,7 @@
             Y: =16
             ZIndex: =11
 
-        TextInput1_4 As text:
+        txtSubmitScreen_ManualNewCategory As text:
             BorderColor: =gblTheme.PrimaryDark
             Color: =gblTheme.PrimaryDark
             Default: =
@@ -1640,7 +1640,9 @@
             HoverFill: =gblTheme.SecondaryDark
             OnSelect: |-
                 =Set(gblShowSpinner, true);
-                
+                Patch(
+                    
+                );
                 Set(gblShowSpinner, false);
             PressedBorderColor: =gblTheme.PrimaryDark
             Text: ="Add This New Category"

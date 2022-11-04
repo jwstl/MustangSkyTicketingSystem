@@ -858,7 +858,6 @@
     "TextInput1_1": 492,
     "TextInput1_2": 494,
     "TextInput1_3": 497,
-    "TextInput1_4": 843,
     "Timer1": 18,
     "Timer2": 761,
     "Toggle1": 782,
@@ -884,6 +883,7 @@
     "txtSortOrder_4": 375,
     "txtSortOrder_5": 429,
     "txtSortOrder_6": 526,
+    "txtSubmitScreen_ManualNewCategory": 843,
     "txtTab1": 79,
     "txtTab1_1": 86,
     "txtTab1_2": 93,
@@ -904,7 +904,7 @@
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "11/04/2022 15:08:25",
+  "HeaderLastSavedDateTimeUTC": "11/04/2022 15:25:37",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {
     "4fa5b4c1-2d80-46d5-8da7-ab8d0ab6e3ea": "\"/providers/microsoft.powerapps/apis/shared_office365users/connections/b9c0d3c7af4248679bd3be7b6e39ad23\"",
@@ -2154,7 +2154,6 @@
     "TextInput1_1": 90,
     "TextInput1_2": 92,
     "TextInput1_3": 95,
-    "TextInput1_4": 533,
     "Timer1": 798,
     "Timer2": 711,
     "Toggle1": 732,
@@ -2180,6 +2179,7 @@
     "txtSortOrder_4": 316,
     "txtSortOrder_5": 369,
     "txtSortOrder_6": 422,
+    "txtSubmitScreen_ManualNewCategory": 533,
     "txtTab1": 662,
     "txtTab1_1": 669,
     "txtTab1_2": 676,
@@ -2259,7 +2259,7 @@
       "videoPlayback": 2
     },
     "DeserializationLoadTime": 15.981631,
-    "ErrorCount": 22
+    "ErrorCount": 23
   },
   "WasLocalDatabaseReferencesEmpty": true
 }
