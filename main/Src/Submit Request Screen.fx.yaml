@@ -728,7 +728,9 @@
                                 // Department
                                 AssociatedDeptID: galEditTicket_Departments.Selected.ID,
                                 // Priority Level
-                                PriorityID: galEditTicket_PriorityLevel.Selected.ID
+                                PriorityID: galEditTicket_PriorityLevel.Selected.ID,
+                                // Request Status
+                                RequestStatusID: galEditTicket_TicketStatus.Selected.ID
                             }
                         )
                     }
@@ -1435,14 +1437,13 @@
         galEditTicket_TicketCategory As gallery.galleryVertical:
             BorderColor: =gblTheme.PrimaryDark
             BorderThickness: =2
-            Default: |-
+            Default: |+
                 =  If(
                     IsBlank(locRecord),
-                    LookUp(RequestPriorities, IsActive And Title = "Medium"),
-                    LookUp(RequestPriorities, ID = locRecord.PriorityID)
+                    {},
+                    LookUp(RequestCategories, ID = locRecord.CategoryID)
                 )
                 
-                )
             Fill: =RGBA(230, 230, 230, 1)
             Height: =290
             Items: |-
