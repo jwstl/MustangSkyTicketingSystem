@@ -59,7 +59,7 @@
         "Name": "imgLogo",
         "Parent": "compAppHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 785,
+        "PublishOrderIndex": 888,
         "Rules": [
           {
             "Category": "Data",
@@ -351,7 +351,7 @@
         "Name": "lblApplicationText",
         "Parent": "compAppHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 786,
+        "PublishOrderIndex": 889,
         "Rules": [
           {
             "Category": "Data",
@@ -703,7 +703,7 @@
         "Name": "lblProfileLine1",
         "Parent": "compAppHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 787,
+        "PublishOrderIndex": 890,
         "Rules": [
           {
             "Category": "Data",
@@ -1073,7 +1073,7 @@
         "Name": "imgProfile",
         "Parent": "compAppHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 788,
+        "PublishOrderIndex": 891,
         "Rules": [
           {
             "Category": "Data",
@@ -1365,7 +1365,7 @@
         "Name": "lblProfileLine2",
         "Parent": "compAppHeader",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 789,
+        "PublishOrderIndex": 892,
         "Rules": [
           {
             "Category": "Data",

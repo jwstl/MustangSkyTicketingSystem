@@ -64,7 +64,7 @@
             Height: =768
             Visible: =gblShowSpinner
             Width: =1366
-            ZIndex: =34
+            ZIndex: =36
 
         imgSpinner_24 As image:
             BorderColor: =White
@@ -75,7 +75,7 @@
             Width: =206
             X: =Parent.Width / 2 - Self.Width / 2
             Y: =321
-            ZIndex: =35
+            ZIndex: =37
 
     Label1_18 As label:
         BorderColor: =gblTheme.PrimaryDark
@@ -422,7 +422,7 @@
         HoverFill: =gblTheme.SecondaryDark
         OnSelect: |-
             =Set(gblShowSpinner, true);
-            
+            Reset(txtEditTicket_RequestSubject);
             Set(gblShowSpinner, false);
         Text: ="Close Ticket"
         X: =1003
@@ -1581,17 +1581,17 @@
             Y: =46
             ZIndex: =13
 
-    "'SIDE NAV_23' As compSideNavMenu":
-        BackgroundColor: =gblTheme.MenuBackcolor
-        Fill: ='SIDE NAV_23'.BackgroundColor
-        ForegroundColor: =gblTheme.MenuForecolor
-        GroupsUserIsIn: =gblUserRoles
-        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
-        MenuItems: =colNavItems
-        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
-        Width: =If('SIDE NAV_23'.IsExpanded, 450, 80)
-        Y: =100
+    Label3 As label:
+        Text: ="CAT-ID-" & galEditTicket_TicketCategory.Selected.ID
+        X: =919
+        Y: =110
         ZIndex: =33
+
+    Label4 As label:
+        Text: ="Status-ID-" & galEditTicket_TicketStatus.Selected.ID
+        X: =759
+        Y: =110
+        ZIndex: =34
 
     grpNotes As group:
         Height: =5
@@ -1721,21 +1721,21 @@
             Y: =514
             ZIndex: =27
 
-    Label3 As label:
-        Text: ="CAT-ID-" & galEditTicket_TicketCategory.Selected.ID
-        X: =919
-        Y: =110
-        ZIndex: =36
-
-    Label4 As label:
-        Text: ="Status-ID-" & galEditTicket_TicketStatus.Selected.ID
-        X: =759
-        Y: =110
-        ZIndex: =37
-
     Label5 As label:
         Text: ="Record ID-" & locRecord.ID
         X: =548
         Y: =110
+        ZIndex: =35
+
+    "'SIDE NAV_23' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_23'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_23'.IsExpanded, 450, 80)
+        Y: =100
         ZIndex: =38
 
