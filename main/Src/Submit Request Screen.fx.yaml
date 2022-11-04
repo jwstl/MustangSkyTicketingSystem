@@ -661,7 +661,9 @@
                                 // Department
                                 AssociatedDeptID: galEditTicket_Departments.Selected.ID,
                                 // Priority Level
-                                PriorityID: galEditTicket_PriorityLevel.Selected.ID
+                                PriorityID: galEditTicket_PriorityLevel.Selected.ID,
+                                // Ticket Status
+                                RequestStatusID: LookUp(RequestStatuses, Title = "New",ID)
                             }
                         )
                     }
