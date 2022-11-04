@@ -1402,10 +1402,12 @@
             BorderThickness: =2
             Default: |+
                 =  If(
-                    Value(locRecord.RequestStatusID) = 0 Or IsBlank(locRecord),
-                    {},
+                    //Value(locRecord.RequestStatusID) = 0 Or IsBlank(locRecord),
+                    //{},
                     //LookUp(RequestPriorities, IsActive And Title = "Medium"),
                     //LookUp(RequestPriorities, ID = locRecord.PriorityID)
+                    IsBlank(locRecord),
+                    LookUp(RequestStatuses, Title = "New"),
                     LookUp(RequestStatuses, ID = locRecord.RequestStatusID)
                 )
                 
@@ -1727,7 +1729,13 @@
 
     Label4 As label:
         Text: ="Status-ID-" & galEditTicket_TicketStatus.Selected.ID
-        X: =658
+        X: =759
         Y: =110
         ZIndex: =37
+
+    Label5 As label:
+        Text: ="Record ID-" & locRecord.ID
+        X: =548
+        Y: =110
+        ZIndex: =38
 
