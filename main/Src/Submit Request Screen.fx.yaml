@@ -1572,7 +1572,7 @@
                 )
             Fill: =RGBA(230, 230, 230, 1)
             Height: =290
-            Items: =Sort(Filter(RequestCategories, IsActive),SortOrder)
+            Items: =Sort(Filter(RequestCategories, IsActive),Title)
             Layout: =Layout.Vertical
             OnSelect: =
             TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
@@ -1635,13 +1635,26 @@
         Button5_9 As button:
             BorderColor: =ColorFade(Self.Fill, -40%)
             Color: =gblTheme.PrimaryDark
+            DisplayMode: |-
+                =If(
+                    Len(Trim(txtSubmitScreen_ManualNewCategory.Text)) > 0, 
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled)
+                )
             Fill: =gblTheme.SecondaryLight
             HoverBorderColor: =gblTheme.PrimaryDark
             HoverFill: =gblTheme.SecondaryDark
             OnSelect: |-
                 =Set(gblShowSpinner, true);
                 Patch(
-                    
+                    RequestCategories,
+                    Defaults(RequestCategories),
+                    {
+                        Title: txtSubmitScreen_ManualNewCategory.Text,
+                        DepartmentID: galEditTicket_Departments.Selected.ID,
+                        IsActive: true,
+                        SortOrder: Max(RequestCategories, SortOrder) +1
+                    }
                 );
                 Set(gblShowSpinner, false);
             PressedBorderColor: =gblTheme.PrimaryDark
