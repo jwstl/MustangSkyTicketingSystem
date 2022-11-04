@@ -613,3 +613,24 @@
         Y: =100
         ZIndex: =36
 
+    Button3 As button:
+        Height: =31
+        OnSelect: |
+            =ForAll(
+                galDropDownValues_3.AllItems As My,
+                Patch(
+                    RequestCategories,
+                    LookUp(
+                        RequestCategories,
+                        ID = My.ID
+                    ),
+                    {DepartmentID: 2}
+                )
+            );
+        Text: ="Set Department for Categories"
+        Visible: =gblShowDebugging
+        Width: =391
+        X: =814
+        Y: =113
+        ZIndex: =39
+

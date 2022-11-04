@@ -63,7 +63,7 @@
             Height: =768
             Visible: =gblShowSpinner
             Width: =1366
-            ZIndex: =31
+            ZIndex: =34
 
         imgSpinner_24 As image:
             BorderColor: =White
@@ -74,7 +74,7 @@
             Width: =206
             X: =Parent.Width / 2 - Self.Width / 2
             Y: =321
-            ZIndex: =32
+            ZIndex: =35
 
     Label1_18 As label:
         BorderColor: =gblTheme.PrimaryDark
@@ -1216,7 +1216,7 @@
         Width: =1246
         X: =100
         Y: =227
-        ZIndex: =21
+        ZIndex: =18
 
         galEditTicket As gallery.galleryVertical:
             BorderColor: =gblTheme.PrimaryDark
@@ -1335,154 +1335,14 @@
         Text: ="Add Note"
         X: =823
         Y: =706
-        ZIndex: =22
-
-    "'SIDE NAV_23' As compSideNavMenu":
-        BackgroundColor: =gblTheme.MenuBackcolor
-        Fill: ='SIDE NAV_23'.BackgroundColor
-        ForegroundColor: =gblTheme.MenuForecolor
-        GroupsUserIsIn: =gblUserRoles
-        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
-        MenuItems: =colNavItems
-        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
-        Width: =If('SIDE NAV_23'.IsExpanded, 450, 80)
-        Y: =100
-        ZIndex: =33
+        ZIndex: =19
 
     lblEditTicket_UserDeptID As label:
         Text: =LookUp(Users,Email = User().Email,DepartmentID)
         Visible: =gblShowDebugging
         X: =558
         Y: =110
-        ZIndex: =34
-
-    grpNotes As group:
-        Height: =5
-        Width: =5
-        X: =40
-        Y: =40
-        ZIndex: =34
-
-        Rectangle6 As rectangle:
-            BorderColor: =Self.Fill
-            Fill: =RGBA(255, 255, 255, 0.85)
-            Height: =768
-            Visible: =locShowAddNotes
-            Width: =1366
-            ZIndex: =23
-
-        Rectangle6_1 As rectangle:
-            BorderColor: =ColorFade(Self.Fill, -25%)
-            Fill: =gblTheme.PrimaryLight
-            Height: =434
-            Visible: =locShowAddNotes
-            Width: =1245
-            X: =100
-            Y: =227
-            ZIndex: =24
-
-        lblRequestNotes As label:
-            Color: =gblTheme.PrimaryDark
-            Height: =30
-            Text: |-
-                ="Request Notes:"
-            Visible: =locShowAddNotes
-            Width: =500
-            X: =250
-            Y: =279
-            ZIndex: =25
-
-        txtRequestNoteBody As text:
-            BorderColor: =gblTheme.PrimaryDark
-            Color: =gblTheme.PrimaryDark
-            Default: =If(!locEditNote,"",galEditTicket.Selected.Notes)
-            Height: =179
-            HoverBorderColor: =gblTheme.PrimaryDark
-            HoverColor: =gblTheme.PrimaryDark
-            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
-            Mode: =TextMode.MultiLine
-            Visible: =locShowAddNotes
-            Width: =500
-            X: =250
-            Y: =318
-            ZIndex: =26
-
-        ddlRequestNoteShowLevel As dropdown:
-            BorderColor: =gblTheme.PrimaryDark
-            ChevronBackground: =gblTheme.PrimaryDark
-            ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
-            Color: =gblTheme.PrimaryDark
-            Default: =If(!locEditNote, "",LookUp(ShowLevels,ID = galEditTicket.Selected.ShowLevelID, Title))
-            HoverFill: =gblTheme.PrimaryLight
-            Items: =Sort(Filter(ShowLevels, IsActive),SortOrder,Ascending)
-            OnChange: =
-            PressedColor: =gblTheme.SecondaryLightFont
-            PressedFill: =gblTheme.SecondaryLight
-            SelectionFill: =gblTheme.PrimaryDark
-            Visible: =locShowAddNotes
-            Width: =500
-            X: =250
-            Y: =543
-            ZIndex: =27
-
-        btnCancelNote As button:
-            BorderColor: =ColorFade(Self.Fill, -40%)
-            Fill: =gblTheme.PrimaryDark
-            HoverFill: =gblTheme.SecondaryDark
-            OnSelect: |-
-                =Set(gblShowSpinner, true);
-                UpdateContext({locShowAddNotes: false});
-                Set(gblShowSpinner, false);
-            Text: ="Cancel"
-            Visible: =locShowAddNotes
-            X: =961
-            Y: =592
-            ZIndex: =28
-
-        btnSaveNote As button:
-            BorderColor: =ColorFade(Self.Fill, -40%)
-            Fill: =gblTheme.SecondaryDark
-            HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
-            HoverFill: =gblTheme.SecondaryLight
-            OnSelect: |
-                =Set(
-                    gblShowSpinner,
-                    true
-                );
-                Patch(
-                    RequestNotes,
-                    Defaults(RequestNotes),
-                    {
-                        Title: User().Email & " - " & Now(),
-                        ShowLevelID: ddlRequestNoteShowLevel.Selected.ID,
-                        RequestID: locRecord.ID,
-                        Notes: txtRequestNoteBody.Text,
-                        StatusChange: false,
-                        UserID: varCurrentUserData.ID,
-                        UsersName: varCurrentUserData.Title
-                    }
-                );
-                UpdateContext({locShowAddNotes: false});
-                Set(
-                    gblShowSpinner,
-                    false
-                );
-            Text: ="Save Note"
-            Visible: =locShowAddNotes
-            X: =1147
-            Y: =592
-            ZIndex: =29
-
-        lblRequestNotes_1 As label:
-            Color: =gblTheme.PrimaryDark
-            Height: =30
-            Text: |-
-                ="Privacy:"
-            Visible: =locShowAddNotes
-            Width: =500
-            X: =250
-            Y: =514
-            ZIndex: =30
+        ZIndex: =28
 
     Rectangle5_168 As rectangle:
         Fill: =gblTheme.SecondaryDark
@@ -1491,7 +1351,7 @@
         Width: =20
         X: =100
         Y: =230
-        ZIndex: =36
+        ZIndex: =29
 
     Rectangle5_169 As rectangle:
         Fill: =gblTheme.SecondaryDark
@@ -1500,7 +1360,7 @@
         Width: =20
         X: =1326
         Y: =641
-        ZIndex: =37
+        ZIndex: =30
 
     Rectangle5_170 As rectangle:
         Fill: =gblTheme.SecondaryDark
@@ -1509,7 +1369,7 @@
         Width: =20
         X: =100
         Y: =641
-        ZIndex: =38
+        ZIndex: =31
 
     cntOfficeUse As groupContainer.manualLayoutContainer:
         Height: =435
@@ -1517,7 +1377,7 @@
         Width: =1245
         X: =100
         Y: =226
-        ZIndex: =39
+        ZIndex: =32
 
         galEditTicket_TicketStatus As gallery.galleryVertical:
             BorderColor: =gblTheme.PrimaryDark
@@ -1572,7 +1432,17 @@
                 )
             Fill: =RGBA(230, 230, 230, 1)
             Height: =290
-            Items: =Sort(Filter(RequestCategories, IsActive),Title)
+            Items: |-
+                =Sort(
+                    Filter(
+                        Filter(
+                            RequestCategories,
+                            DepartmentID = galEditTicket_Departments.Selected.ID
+                        ),
+                        IsActive
+                    ),
+                    Title
+                )
             Layout: =Layout.Vertical
             OnSelect: =
             TemplateFill: =If(ThisItem.IsSelected, ColorFade(gblTheme.GallerySelectedBG, 50%), White)
@@ -1649,29 +1519,188 @@
             Fill: =gblTheme.SecondaryLight
             HoverBorderColor: =gblTheme.PrimaryDark
             HoverFill: =gblTheme.SecondaryDark
-            OnSelect: |-
-                =Set(gblShowSpinner, true);
+            OnSelect: |
+                =Set(
+                    gblShowSpinner,
+                    true
+                );
                 If(
                     CountRows(
-                        Filter(RequestCategories, Title = Trim(txtSubmitScreen_ManualNewCategory.Text))) = 0,
-                    
-                Patch(
-                    RequestCategories,
-                    Defaults(RequestCategories),
-                    {
-                        Title: txtSubmitScreen_ManualNewCategory.Text,
-                        DepartmentID: galEditTicket_Departments.Selected.ID,
-                        IsActive: true,
-                        SortOrder: Max(RequestCategories, SortOrder) +1
-                    }
-                );,
-                Notify("This category already exists",NotificationType.Error)
+                        Filter(
+                            RequestCategories,
+                            Title = Trim(txtSubmitScreen_ManualNewCategory.Text)
+                            And DepartmentID = galEditTicket_Departments.Selected.ID
+                        )
+                    ) = 0,
+                    Patch(
+                        RequestCategories,
+                        Defaults(RequestCategories),
+                        {
+                            Title: txtSubmitScreen_ManualNewCategory.Text,
+                            DepartmentID: galEditTicket_Departments.Selected.ID,
+                            IsActive: true,
+                            SortOrder: Max(
+                                RequestCategories,
+                                SortOrder
+                            ) + 1
+                        }
+                    );
+                    ,
+                    Notify(
+                        "This category already exists",
+                        NotificationType.Error,
+                        5000
+                    )
                 );
-                Set(gblShowSpinner, false);
+                Set(
+                    gblShowSpinner,
+                    false
+                );
+                Reset(txtSubmitScreen_ManualNewCategory);
             PressedBorderColor: =gblTheme.PrimaryDark
             Text: ="Add This New Category"
             Width: =251
             X: =975
             Y: =46
             ZIndex: =13
+
+    "'SIDE NAV_23' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_23'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_23'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =33
+
+    grpNotes As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =34
+
+        Rectangle6 As rectangle:
+            BorderColor: =Self.Fill
+            Fill: =RGBA(255, 255, 255, 0.85)
+            Height: =768
+            Visible: =locShowAddNotes
+            Width: =1366
+            ZIndex: =20
+
+        Rectangle6_1 As rectangle:
+            BorderColor: =ColorFade(Self.Fill, -25%)
+            Fill: =gblTheme.PrimaryLight
+            Height: =434
+            Visible: =locShowAddNotes
+            Width: =1245
+            X: =100
+            Y: =227
+            ZIndex: =21
+
+        lblRequestNotes As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: |-
+                ="Request Notes:"
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =279
+            ZIndex: =22
+
+        txtRequestNoteBody As text:
+            BorderColor: =gblTheme.PrimaryDark
+            Color: =gblTheme.PrimaryDark
+            Default: =If(!locEditNote,"",galEditTicket.Selected.Notes)
+            Height: =179
+            HoverBorderColor: =gblTheme.PrimaryDark
+            HoverColor: =gblTheme.PrimaryDark
+            HoverFill: =ColorFade(gblTheme.PrimaryLight, 70%)
+            Mode: =TextMode.MultiLine
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =318
+            ZIndex: =23
+
+        ddlRequestNoteShowLevel As dropdown:
+            BorderColor: =gblTheme.PrimaryDark
+            ChevronBackground: =gblTheme.PrimaryDark
+            ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+            Color: =gblTheme.PrimaryDark
+            Default: =If(!locEditNote, "",LookUp(ShowLevels,ID = galEditTicket.Selected.ShowLevelID, Title))
+            HoverFill: =gblTheme.PrimaryLight
+            Items: =Sort(Filter(ShowLevels, IsActive),SortOrder,Ascending)
+            OnChange: =
+            PressedColor: =gblTheme.SecondaryLightFont
+            PressedFill: =gblTheme.SecondaryLight
+            SelectionFill: =gblTheme.PrimaryDark
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =543
+            ZIndex: =24
+
+        btnCancelNote As button:
+            BorderColor: =ColorFade(Self.Fill, -40%)
+            Fill: =gblTheme.PrimaryDark
+            HoverFill: =gblTheme.SecondaryDark
+            OnSelect: |-
+                =Set(gblShowSpinner, true);
+                UpdateContext({locShowAddNotes: false});
+                Set(gblShowSpinner, false);
+            Text: ="Cancel"
+            Visible: =locShowAddNotes
+            X: =961
+            Y: =592
+            ZIndex: =25
+
+        btnSaveNote As button:
+            BorderColor: =ColorFade(Self.Fill, -40%)
+            Fill: =gblTheme.SecondaryDark
+            HoverBorderColor: =ColorFade(Self.BorderColor, -20%)
+            HoverFill: =gblTheme.SecondaryLight
+            OnSelect: |
+                =Set(
+                    gblShowSpinner,
+                    true
+                );
+                Patch(
+                    RequestNotes,
+                    Defaults(RequestNotes),
+                    {
+                        Title: User().Email & " - " & Now(),
+                        ShowLevelID: ddlRequestNoteShowLevel.Selected.ID,
+                        RequestID: locRecord.ID,
+                        Notes: txtRequestNoteBody.Text,
+                        StatusChange: false,
+                        UserID: varCurrentUserData.ID,
+                        UsersName: varCurrentUserData.Title
+                    }
+                );
+                UpdateContext({locShowAddNotes: false});
+                Set(
+                    gblShowSpinner,
+                    false
+                );
+            Text: ="Save Note"
+            Visible: =locShowAddNotes
+            X: =1147
+            Y: =592
+            ZIndex: =26
+
+        lblRequestNotes_1 As label:
+            Color: =gblTheme.PrimaryDark
+            Height: =30
+            Text: |-
+                ="Privacy:"
+            Visible: =locShowAddNotes
+            Width: =500
+            X: =250
+            Y: =514
+            ZIndex: =27
 

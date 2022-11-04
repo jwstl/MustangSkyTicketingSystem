@@ -660,10 +660,10 @@
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 100,
-                  "charOffset": 37,
+                  "charLength": 207,
+                  "charOffset": 45,
                   "snippet": {
-                    "text": "CountRows(\r\n        Filter(RequestCategories, Title = Trim(txtSubmitScreen_ManualNewCategory.Text)))"
+                    "text": "CountRows(\n        Filter(\n            RequestCategories,\n            Title = Trim(txtSubmitScreen_ManualNewCategory.Text)\n            And DepartmentID = galEditTicket_Departments.Selected.ID\n        )\n    )"
                   }
                 }
               },
@@ -700,10 +700,10 @@
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 33,
-                  "charOffset": 385,
+                  "charLength": 79,
+                  "charOffset": 518,
                   "snippet": {
-                    "text": "Max(RequestCategories, SortOrder)"
+                    "text": "Max(\n                RequestCategories,\n                SortOrder\n            )"
                   }
                 }
               },
