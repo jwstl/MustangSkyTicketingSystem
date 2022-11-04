@@ -154,7 +154,7 @@ App As appinfo:
         // ===========================================================================================
         // Setting the Current User Values
         // ===========================================================================================
-        If(
+        /*If(
             CountRows(
                 Filter(
                     Users,
@@ -202,7 +202,69 @@ App As appinfo:
                     }
                 )
             )
+        );*/
+        // ===========================================================================================
+        // Setting the Current User Values
+        // ===========================================================================================
+        If(
+            CountRows(
+                Filter(
+                    Users,
+                    Email = User().Email
+                )
+            ) = 0,
+            Set(
+                varCurrentUserData,
+                Patch(
+                    Users,
+                    Defaults(Users),
+                    {
+                        Title: User().FullName,
+                        FirstName: First(
+                            Split(
+                                User().FullName,
+                                " "
+                            )
+                        ).Result,
+                        LastName: Last(
+                            Split(
+                                User().FullName,
+                                " "
+                            )
+                        ).Result,
+                        Email: User().Email,
+                        Photo: Substitute(
+                            JSON(
+                                User().Image,
+                                JSONFormat.IncludeBinaryData
+                            ),
+                            """",
+                            ""
+                        ),
+                        PhotoLength: Len(
+                            Substitute(
+                                JSON(
+                                    User().Image,
+                                    JSONFormat.IncludeBinaryData
+                                ),
+                                """",
+                                ""
+                            )
+                        )
+                    }
+                )
+            );,
+        
+        // We need to set the Current User Data here
+        
+        Set(varCurrentUserData,
+            LookUp(
+                Users,
+                Email = User().Email
+            )
         );
+        );
+        
         // ===========================================================================================
         // gblUserRoles is the variable we pass into the menu to tell it
         // what are all the roles this user is a part of so it knows

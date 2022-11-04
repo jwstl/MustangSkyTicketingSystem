@@ -186,7 +186,7 @@
             DisplayFields: =["DisplayName","JobTitle"]
             InputTextPlaceholder: ="Suggested Technician"
             IsSearchable: =false
-            Items: |-
+            Items: |
                 =If(
                     !IsBlank(locRecord),
                     Office365Users.SearchUser(

@@ -1489,7 +1489,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "icoShowDebug_20",
-      "ParentIndex": 2,
+      "ParentIndex": 1,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2020,7 +2020,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Label1_31",
-      "ParentIndex": 3,
+      "ParentIndex": 2,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -4789,7 +4789,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "recSpinner_25",
-      "ParentIndex": 1,
+      "ParentIndex": 3,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
