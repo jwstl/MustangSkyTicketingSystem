@@ -741,11 +741,11 @@ App As appinfo:
                 },
                 {
                     TabText: "Office Use",
-                    ShowForThisRole: "gblIsAppAdmin"
+                    ShowForThisRole: "DeptUser"
                 },
                 {
                     TabText: "Assignments",
-                    ShowForThisRole: "gblIsAppAdmin"
+                    ShowForThisRole: "DeptUser"
                 },
                 {
                     TabText: "Notes",

@@ -29,8 +29,8 @@
         BorderThickness: =2
         Fill: =gblTheme.PrimaryLight
         Height: =123
-        Width: =920
-        X: =446
+        Width: =1008
+        X: =338
         Y: =212
         ZIndex: =1
 
@@ -64,7 +64,7 @@
             Height: =768
             Visible: =gblShowSpinner
             Width: =1366
-            ZIndex: =37
+            ZIndex: =39
 
         imgSpinner_20 As image:
             BorderColor: =White
@@ -75,7 +75,7 @@
             Width: =206
             X: =Parent.Width / 2 - Self.Width / 2
             Y: =353
-            ZIndex: =38
+            ZIndex: =40
 
     icoShowDebug_14 As icon.Add:
         Color: =If(gblShowDebugging, gblTheme.PrimaryLight, ColorFade(gblTheme.PrimaryDark, 10%))
@@ -93,7 +93,7 @@
         BorderThickness: =2
         Fill: =RGBA(230, 230, 230, 1)
         Height: =340
-        Items: =Sort(RequestCategories, SortOrder)
+        Items: =Sort(Filter(RequestCategories, DepartmentID = ddlEditCategory_AssociatedDepartment.Selected.ID),SortOrder)
         Layout: =Layout.Vertical
         OnSelect: |-
             =UpdateContext({locNewRecord: false});
@@ -231,9 +231,9 @@
         Height: =29
         PaddingLeft: =0
         Text: |-
-            ="Value:"
+            ="Category Name:"
         Width: =441
-        X: =465
+        X: =617
         Y: =227
         ZIndex: =6
 
@@ -250,8 +250,8 @@
         HoverBorderColor: =gblTheme.PrimaryDark
         HoverColor: =gblTheme.PrimaryDark
         HoverFill: =gblTheme.PrimaryLight
-        Width: =300
-        X: =466
+        Width: =225
+        X: =618
         Y: =259
         ZIndex: =7
 
@@ -271,13 +271,14 @@
                 {
                     Title:              txtValue_3.Text,
                     SortOrder:          Value(txtSortOrder_3.Text),
-                    IsActive:           togIsActive_3.Value
+                    IsActive:           togIsActive_3.Value,
+                    DepartmentID:       ddlEditCategory_AssociatedDepartment.Selected.ID
                 }
             );
             Set(gblShowSpinner, false);
         Text: ="Save"
         Width: =120
-        X: =1206
+        X: =1214
         Y: =267
         ZIndex: =8
 
@@ -290,7 +291,7 @@
             =UpdateContext({locNewRecord: true});
         Text: ="Add New"
         Width: =120
-        X: =1066
+        X: =1082
         Y: =267
         ZIndex: =9
 
@@ -300,7 +301,7 @@
         PaddingLeft: =0
         Text: |-
             ="Sort Order:"
-        X: =786
+        X: =858
         Y: =232
         ZIndex: =10
 
@@ -318,8 +319,8 @@
         HoverBorderColor: =gblTheme.PrimaryDark
         HoverColor: =gblTheme.PrimaryDark
         HoverFill: =gblTheme.PrimaryLight
-        Width: =150
-        X: =786
+        Width: =100
+        X: =858
         Y: =262
         ZIndex: =11
 
@@ -351,7 +352,7 @@
         Height: =30
         PaddingLeft: =0
         Text: ="Is Active?"
-        X: =884
+        X: =908
         Y: =233
         ZIndex: =20
 
@@ -364,7 +365,7 @@
                 galDropDownValues_3.Selected.IsActive
             )
         TrueFill: =gblTheme.PrimaryDark
-        X: =954
+        X: =978
         Y: =271
         ZIndex: =21
 
@@ -427,7 +428,7 @@
         TemplateFill: =If(ThisItem.IsSelected, LightYellow, White)
         TemplatePadding: =2
         TemplateSize: =50
-        Width: =300
+        Width: =215
         X: =101
         Y: =202
         ZIndex: =25
@@ -601,18 +602,6 @@
         Y: =173
         ZIndex: =35
 
-    "'SIDE NAV_19' As compSideNavMenu":
-        BackgroundColor: =gblTheme.MenuBackcolor
-        Fill: ='SIDE NAV_19'.BackgroundColor
-        ForegroundColor: =gblTheme.MenuForecolor
-        GroupsUserIsIn: =gblUserRoles
-        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
-        MenuItems: =colNavItems
-        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
-        Width: =If('SIDE NAV_19'.IsExpanded, 450, 80)
-        Y: =100
-        ZIndex: =36
-
     Button3 As button:
         Height: =31
         OnSelect: |
@@ -632,5 +621,44 @@
         Width: =391
         X: =814
         Y: =113
-        ZIndex: =39
+        ZIndex: =36
+
+    Label1_69 As label:
+        Color: =gblTheme.PrimaryDark
+        Height: =29
+        Text: |-
+            ="Associated Department:"
+        Width: =223
+        X: =349
+        Y: =227
+        ZIndex: =37
+
+    ddlEditCategory_AssociatedDepartment As dropdown:
+        BorderColor: =gblTheme.PrimaryDark
+        ChevronBackground: =gblTheme.PrimaryDark
+        ChevronHoverBackground: =ColorFade(gblTheme.PrimaryDark, -20%)
+        Color: =gblTheme.PrimaryDark
+        Height: =45
+        HoverFill: =gblTheme.PrimaryLight
+        Items: =Departments
+        OnChange: =
+        PressedColor: =gblTheme.SecondaryLightFont
+        PressedFill: =gblTheme.SecondaryLight
+        SelectionFill: =gblTheme.PrimaryDark
+        Width: =250
+        X: =349
+        Y: =259
+        ZIndex: =38
+
+    "'SIDE NAV_19' As compSideNavMenu":
+        BackgroundColor: =gblTheme.MenuBackcolor
+        Fill: ='SIDE NAV_19'.BackgroundColor
+        ForegroundColor: =gblTheme.MenuForecolor
+        GroupsUserIsIn: =gblUserRoles
+        IconsOrImages: =varGlobalMenuSettings.IconsOrImages
+        MenuItems: =colNavItems
+        ShowDottedOutline: =varGlobalMenuSettings.ShowDottedOutline
+        Width: =If('SIDE NAV_19'.IsExpanded, 450, 80)
+        Y: =100
+        ZIndex: =41
 
