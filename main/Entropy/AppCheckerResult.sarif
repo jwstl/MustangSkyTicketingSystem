@@ -651,37 +651,40 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.Button5_9.DisplayMode"
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.Button5_9.OnSelect"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.Button5_9.DisplayMode",
+                  "fullyQualifiedName": "'Submit Request Screen'.cntOfficeUse.Button5_9.OnSelect",
                   "relativeAddress": 0
                 },
                 "region": {
-                  "charLength": 1,
-                  "charOffset": 112,
+                  "charLength": 100,
+                  "charOffset": 37,
                   "snippet": {
-                    "text": ")"
+                    "text": "CountRows(\r\n        Filter(RequestCategories, Title = Trim(txtSubmitScreen_ManualNewCategory.Text)))"
                   }
                 }
               },
               "properties": {
-                "member": "DisplayMode",
+                "member": "OnSelect",
                 "module": "Submit Request Screen",
                 "type": "'Submit Request Screen'.cntOfficeUse.Button5_9"
               }
             }
           ],
           "message": {
+            "arguments": [
+              "CountRows"
+            ],
             "id": "issue"
           },
           "properties": {
-            "level": "High"
+            "level": "Medium"
           },
-          "ruleId": "app-ErrBadToken",
-          "ruleIndex": 4
+          "ruleId": "app-SuggestRemoteExecutionHint-OpNotSupportedByService",
+          "ruleIndex": 0
         },
         {
           "locations": [
@@ -698,7 +701,7 @@
                 },
                 "region": {
                   "charLength": 33,
-                  "charOffset": 263,
+                  "charOffset": 385,
                   "snippet": {
                     "text": "Max(RequestCategories, SortOrder)"
                   }

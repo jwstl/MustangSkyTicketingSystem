@@ -1636,16 +1636,25 @@
             BorderColor: =ColorFade(Self.Fill, -40%)
             Color: =gblTheme.PrimaryDark
             DisplayMode: |-
-                =If(
+                =/*If(
                     Len(Trim(txtSubmitScreen_ManualNewCategory.Text)) > 0, 
                     DisplayMode.Edit,
                     DisplayMode.Disabled)
+                )*/
+                If(
+                    Len(Trim(txtSubmitScreen_ManualNewCategory.Text)) > 0,
+                    DisplayMode.Edit,
+                    DisplayMode.Disabled
                 )
             Fill: =gblTheme.SecondaryLight
             HoverBorderColor: =gblTheme.PrimaryDark
             HoverFill: =gblTheme.SecondaryDark
             OnSelect: |-
                 =Set(gblShowSpinner, true);
+                If(
+                    CountRows(
+                        Filter(RequestCategories, Title = Trim(txtSubmitScreen_ManualNewCategory.Text))) = 0,
+                    
                 Patch(
                     RequestCategories,
                     Defaults(RequestCategories),
@@ -1655,6 +1664,8 @@
                         IsActive: true,
                         SortOrder: Max(RequestCategories, SortOrder) +1
                     }
+                );,
+                Notify("This category already exists",NotificationType.Error)
                 );
                 Set(gblShowSpinner, false);
             PressedBorderColor: =gblTheme.PrimaryDark
