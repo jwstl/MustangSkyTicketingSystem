@@ -1392,14 +1392,15 @@
         galEditTicket_TicketStatus As gallery.galleryVertical:
             BorderColor: =gblTheme.PrimaryDark
             BorderThickness: =2
-            Default: |-
+            Default: |+
                 =  If(
                     IsBlank(locRecord),
-                    LookUp(RequestPriorities, IsActive And Title = "Medium"),
-                    LookUp(RequestPriorities, ID = locRecord.PriorityID)
+                    {},
+                    //LookUp(RequestPriorities, IsActive And Title = "Medium"),
+                    //LookUp(RequestPriorities, ID = locRecord.PriorityID)
+                    LookUp(RequestStatuses, ID = locRecord.RequestStatusID)
                 )
                 
-                )
             Fill: =RGBA(230, 230, 230, 1)
             Height: =368
             Items: =Sort(Filter(RequestStatuses, IsActive),SortOrder)
