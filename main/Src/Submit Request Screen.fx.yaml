@@ -919,7 +919,17 @@
                     DisplayMode.Edit
                 )
             Height: =190
-            Items: =colEditTicketTabs
+            Items: |-
+                =Filter(
+                    colEditTicketTabs,
+                    (
+                        ShowForThisRole = "DeptUser" 
+                    And Value(lblEditTicket_UserDeptID.Text) = locRecord.AssociatedDeptID
+                    )
+                    Or ShowForThisRole = "User"
+                    Or
+                    gblIsAppAdmin
+                )
             TemplatePadding: =3
             TemplateSize: =200
             Width: =1216
