@@ -121,7 +121,7 @@
         "Name": "icoHamburger",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 787,
+        "PublishOrderIndex": 788,
         "Rules": [
           {
             "Category": "Data",
@@ -390,7 +390,7 @@
         "Name": "Rectangle3",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 788,
+        "PublishOrderIndex": 789,
         "Rules": [
           {
             "Category": "Data",
@@ -535,7 +535,7 @@
             "Name": "galleryTemplate1",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 790,
+            "PublishOrderIndex": 791,
             "Rules": [
               {
                 "Category": "Design",
@@ -650,7 +650,7 @@
             "Name": "Icon2",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 791,
+            "PublishOrderIndex": 792,
             "Rules": [
               {
                 "Category": "Design",
@@ -908,7 +908,7 @@
             "Name": "Label6",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 792,
+            "PublishOrderIndex": 793,
             "Rules": [
               {
                 "Category": "Data",
@@ -1257,7 +1257,7 @@
             "Name": "recBar",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 793,
+            "PublishOrderIndex": 794,
             "Rules": [
               {
                 "Category": "Data",
@@ -1462,7 +1462,7 @@
             "Name": "Rectangle4",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 794,
+            "PublishOrderIndex": 795,
             "Rules": [
               {
                 "Category": "Data",
@@ -1696,7 +1696,7 @@
             "Name": "imgMenu",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 795,
+            "PublishOrderIndex": 796,
             "Rules": [
               {
                 "Category": "Data",
@@ -2054,7 +2054,7 @@
             "Name": "icoMenu",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 796,
+            "PublishOrderIndex": 797,
             "Rules": [
               {
                 "Category": "Data",
@@ -2372,7 +2372,7 @@
             "Name": "recDotted",
             "Parent": "galleryMenuItems",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 797,
+            "PublishOrderIndex": 798,
             "Rules": [
               {
                 "Category": "Data",
@@ -2603,7 +2603,7 @@
         "Name": "galleryMenuItems",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 789,
+        "PublishOrderIndex": 790,
         "Rules": [
           {
             "Category": "Data",
@@ -2851,7 +2851,7 @@
         "Name": "Label11",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 798,
+        "PublishOrderIndex": 799,
         "Rules": [
           {
             "Category": "Data",
@@ -3189,7 +3189,7 @@
         "Name": "lblIconsOrImages",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 799,
+        "PublishOrderIndex": 800,
         "Rules": [
           {
             "Category": "Data",
@@ -3520,7 +3520,7 @@
         "Name": "Label12",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 800,
+        "PublishOrderIndex": 801,
         "Rules": [
           {
             "Category": "Data",
@@ -3880,7 +3880,7 @@
         "Name": "Timer1",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 801,
+        "PublishOrderIndex": 802,
         "Rules": [
           {
             "Category": "Data",
@@ -4189,7 +4189,7 @@
         "Name": "Label10",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 802,
+        "PublishOrderIndex": 803,
         "Rules": [
           {
             "Category": "Data",
@@ -4534,7 +4534,7 @@
         "Name": "Label9",
         "Parent": "compSideNavMenu",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 803,
+        "PublishOrderIndex": 804,
         "Rules": [
           {
             "Category": "Data",

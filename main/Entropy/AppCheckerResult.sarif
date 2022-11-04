@@ -4711,19 +4711,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "'Submit Request Screen'.galTabs_1.AccessibleLabel"
+                  "fullyQualifiedName": "'Submit Request Screen'.galTicket_Tabs.AccessibleLabel"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "'Submit Request Screen'.galTabs_1.AccessibleLabel",
+                  "fullyQualifiedName": "'Submit Request Screen'.galTicket_Tabs.AccessibleLabel",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "AccessibleLabel",
                 "module": "Submit Request Screen",
-                "type": "'Submit Request Screen'.galTabs_1"
+                "type": "'Submit Request Screen'.galTicket_Tabs"
               }
             }
           ],
@@ -4741,19 +4741,19 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "'Submit Request Screen'.galTabs_1.TabIndex"
+                  "fullyQualifiedName": "'Submit Request Screen'.galTicket_Tabs.TabIndex"
                 }
               ],
               "physicalLocation": {
                 "address": {
-                  "fullyQualifiedName": "'Submit Request Screen'.galTabs_1.TabIndex",
+                  "fullyQualifiedName": "'Submit Request Screen'.galTicket_Tabs.TabIndex",
                   "relativeAddress": 0
                 }
               },
               "properties": {
                 "member": "TabIndex",
                 "module": "Submit Request Screen",
-                "type": "'Submit Request Screen'.galTabs_1"
+                "type": "'Submit Request Screen'.galTicket_Tabs"
               }
             }
           ],

@@ -5,6 +5,7 @@
             gblShowSpinner,
             true
         );
+        Reset(galTicket_Tabs);
         Patch(
             'Screen Use',
             Defaults('Screen Use'),
@@ -91,7 +92,7 @@
 
     cntTicketInfo As groupContainer.manualLayoutContainer:
         Height: =442
-        Visible: =galTabs_1.Selected.TabText = "Ticket Info"
+        Visible: =galTicket_Tabs.Selected.TabText = "Ticket Info"
         Width: =1246
         X: =100
         Y: =227
@@ -664,6 +665,7 @@
                                 PriorityID: galEditTicket_PriorityLevel.Selected.ID,
                                 // Ticket Status
                                 RequestStatusID: LookUp(RequestStatuses, Title = "New",ID)
+                                
                             }
                         )
                     }
@@ -730,7 +732,9 @@
                                 // Priority Level
                                 PriorityID: galEditTicket_PriorityLevel.Selected.ID,
                                 // Request Status
-                                RequestStatusID: galEditTicket_TicketStatus.Selected.ID
+                                RequestStatusID: galEditTicket_TicketStatus.Selected.ID,
+                                // Category
+                                CategoryID: galEditTicket_TicketCategory.Selected.ID
                             }
                         )
                     }
@@ -915,7 +919,7 @@
         Y: =40
         ZIndex: =16
 
-        galTabs_1 As gallery.galleryHorizontal:
+        galTicket_Tabs As gallery.galleryHorizontal:
             DisplayMode: |-
                 =If(
                     IsBlank(locRecord),
@@ -968,7 +972,7 @@
 
     cntImages As groupContainer.manualLayoutContainer:
         Height: =434
-        Visible: =galTabs_1.Selected.TabText = "Images"
+        Visible: =galTicket_Tabs.Selected.TabText = "Images"
         Width: =1245
         X: =100
         Y: =227
@@ -1226,7 +1230,7 @@
 
     cntNotes As groupContainer.manualLayoutContainer:
         Height: =457
-        Visible: = galTabs_1.Selected.TabText = "Notes"
+        Visible: = galTicket_Tabs.Selected.TabText = "Notes"
         Width: =1246
         X: =100
         Y: =227
@@ -1387,7 +1391,7 @@
 
     cntOfficeUse As groupContainer.manualLayoutContainer:
         Height: =435
-        Visible: =galTabs_1.Selected.TabText = "Office Use"
+        Visible: =galTicket_Tabs.Selected.TabText = "Office Use"
         Width: =1245
         X: =100
         Y: =226
@@ -1439,7 +1443,7 @@
             BorderThickness: =2
             Default: |+
                 =  If(
-                    IsBlank(locRecord),
+                    Value(locRecord.CategoryID) = 0 Or IsBlank(locRecord),
                     {},
                     LookUp(RequestCategories, ID = locRecord.CategoryID)
                 )
@@ -1462,7 +1466,7 @@
             Width: =862
             WrapCount: =2
             X: =364
-            Y: =124
+            Y: =129
             ZIndex: =8
 
             Label2_44 As label:
@@ -1714,4 +1718,16 @@
             X: =250
             Y: =514
             ZIndex: =27
+
+    Label3 As label:
+        Text: ="CAT-ID-" & galEditTicket_TicketCategory.Selected.ID
+        X: =919
+        Y: =110
+        ZIndex: =36
+
+    Label4 As label:
+        Text: ="Status-ID-" & galEditTicket_TicketStatus.Selected.ID
+        X: =658
+        Y: =110
+        ZIndex: =37
 
