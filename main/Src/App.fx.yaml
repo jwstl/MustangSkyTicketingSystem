@@ -635,7 +635,7 @@ App As appinfo:
                     MenuImage: SampleImage,
                     MenuIcon: Icon.Key,
                     ShowForThisRole: "gblIsAppDeveloper",
-                    ScreenToGoTo: 'Developer Screen',
+                    ScreenToGoTo: 'Submit Request Screen',
                     Visible: true,
                     LaunchLink: false,
                     LaunchURL: ""
