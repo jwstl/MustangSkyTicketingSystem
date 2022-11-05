@@ -19,7 +19,7 @@
       "blockmovingcontrol": true,
       "cdsdataformatting": false,
       "classiccontrols": false,
-      "copyandmerge": true,
+      "copyandmerge": false,
       "datatablev2control": true,
       "delaycontrolrendering": false,
       "delayloadscreens": true,
