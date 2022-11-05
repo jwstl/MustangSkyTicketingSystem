@@ -4653,7 +4653,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "cntImages",
-      "ParentIndex": 17,
+      "ParentIndex": 16,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -4789,7 +4789,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "cntNotes",
-      "ParentIndex": 18,
+      "ParentIndex": 17,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -5068,7 +5068,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "cntTicketInfo",
-      "ParentIndex": 16,
+      "ParentIndex": 19,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -19909,7 +19909,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Rectangle6_1",
-      "ParentIndex": 19,
+      "ParentIndex": 18,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
